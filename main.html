@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная страница</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+            --transition: all 0.3s ease-in-out;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, var(--dark), #000);
+            color: var(--light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 800px;
+            padding: 20px;
+            background: rgba(45, 52, 54, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(253, 121, 168, 0.5);
+        }
+
+        .button {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.6);
+        }
+
+        .button:active {
+            transform: translateY(1px);
+            box-shadow: 0 4px 10px rgba(108, 92, 231, 0.3);
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Добро пожаловать!</h1>
+        <p>Выберите игру или раздел:</p>
+        <div>
+            <a href="game 1/index.html" class="button">Игра 1</a>
+            <a href="game 2/index.html" class="button">Игра 2</a>
+            <a href="game 3/index.html" class="button">Игра 3</a>
+            <a href="game 4/index.html" class="button">Игра 4</a>
+            <a href="assets/about/about.html" class="button">О проекте</a>
+            <a href="assets/leaderboard/leaderboard.html" class="button">Таблица лидеров</a>
+            <a href="обучение/index.html" class="button">Обучение</a>
+        </div>
+        <footer>
+            <p>Создано с любовью к математике. <a href="узнать больше/index.html">Узнать больше</a></p>
+        </footer>
+    </div>
+</body>
+</html>
