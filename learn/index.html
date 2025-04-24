@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Для чего был создан сайт?</title>
+    <style>
+        :root {
+            --primary: #6c5ce7; /* Основной цвет */
+            --secondary: #a29bfe; /* Второстепенный цвет */
+            --accent: #fd79a8; /* Акцентный цвет */
+            --dark: #2d3436; /* Темный фон */
+            --light: #f5f6fa; /* Светлый текст */
+            --success: #00b894; /* Цвет успеха */
+            --danger: #d63031; /* Цвет ошибки */
+            --warning: #fdcb6e; /* Цвет предупреждения */
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Анимация переходов */
+        }
+
+        /* Сброс стилей для всех элементов */
+        * {
+            margin: 0; /* Убираем внешние отступы */
+            padding: 0; /* Убираем внутренние отступы */
+            box-sizing: border-box; /* Учитываем границы и отступы в размерах элементов */
+        }
+
+        /* Стили для тела страницы */
+        body {
+            font-family: 'Montserrat', sans-serif; /* Основной шрифт */
+            color: var(--light); /* Цвет текста */
+            overflow: hidden; /* Отключаем прокрутку */
+            position: relative; /* Для позиционирования вложенных элементов */
+            height: 100vh; /* Высота экрана */
+            background: linear-gradient(135deg, var(--dark), #000); /* Градиентный фон */
+        }
+
+        /* Стили для фонового видео */
+        #background-video {
+            position: fixed; /* Фиксированное позиционирование */
+            right: 0; /* Прижимаем к правому краю */
+            bottom: 0; /* Прижимаем к нижнему краю */
+            min-width: 100%; /* Минимальная ширина */
+            min-height: 100%; /* Минимальная высота */
+            z-index: -1; /* Отправляем на задний план */
+            opacity: 0.3; /* Прозрачность видео */
+            object-fit: cover; /* Масштабируем видео, чтобы оно заполнило экран */
+        }
+
+        /* Стили для контейнера с контентом */
+        .content-container {
+            max-width: 900px; /* Максимальная ширина */
+            margin: 0 auto; /* Центрируем по горизонтали */
+            padding: 30px; /* Внутренние отступы */
+            background-color: rgba(45, 52, 54, 0.85); /* Полупрозрачный фон */
+            border-radius: 20px; /* Скругленные углы */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Тень */
+            backdrop-filter: blur(10px); /* Размытие фона для создания эффекта стекла */
+            border: 1px solid rgba(255, 255, 255, 0.1); /* Полупрозрачная рамка */
+            position: relative; /* Для вложенных элементов */
+            overflow: hidden; /* Скрываем содержимое за границами */
+            transform: translateY(0); /* Начальная позиция */
+            transition: var(--transition); /* Анимация изменений */
+        }
+
+        /* Эффект при наведении на контейнер */
+        .content-container:hover {
+            transform: translateY(-5px); /* Поднимаем контейнер вверх */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6); /* Увеличиваем тень */
+        }
+
+        /* Стили для заголовка */
+        h1 {
+            font-family: 'Orbitron', sans-serif; /* Футуристический шрифт */
+            text-align: center; /* Центрируем текст */
+            margin-bottom: 30px; /* Отступ снизу */
+            color: var(--accent); /* Акцентный цвет */
+            text-shadow: 0 0 10px rgba(253, 121, 168, 0.5); /* Свечение текста */
+            font-size: 2.5rem; /* Размер шрифта */
+            letter-spacing: 2px; /* Расстояние между буквами */
+            position: relative; /* Для псевдоэлементов */
+            display: inline-block; /* Блочно-строчный элемент */
+            width: 100%; /* Растягиваем на всю ширину */
+        }
+
+        /* Линия под заголовком */
+        h1::after {
+            content: ''; /* Пустой псевдоэлемент */
+            position: absolute; /* Абсолютное позиционирование */
+            bottom: -10px; /* Под заголовком */
+            left: 50%; /* Центрируем */
+            transform: translateX(-50%); /* Сдвигаем влево */
+            width: 100px; /* Ширина линии */
+            height: 3px; /* Высота линии */
+            background: linear-gradient(90deg, var(--primary), var(--accent)); /* Градиент */
+            border-radius: 3px; /* Скругленные края */
+        }
+
+        /* Стили для текста "Узнать больше" */
+        .learn-more-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border-left: 3px solid var(--primary);
+        }
+
+        /* Стили для кнопки "Узнать больше" */
+        .learn-more-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            margin: 10px;
+            text-align: center;
+        }
+
+        .learn-more-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .learn-more-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.6);
+        }
+
+        .learn-more-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Стили для кнопки "Назад на главную" */
+        .back-button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: var(--transition);
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .back-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.6);
+        }
+
+        .back-button:hover::before {
+            left: 100%;
+        }
+
+        /* Контейнер для кнопок */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .content-container {
+                padding: 20px;
+                margin: 20px;
+                transform: none !important;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .learn-more-text {
+                font-size: 1rem;
+                padding: 15px;
+            }
+
+            .button-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .learn-more-btn, .back-button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Фоновое видео -->
+    <video id="background-video" autoplay loop muted>
+        <source src="../assets/video/видео.mp4" type="video/mp4">
+        Ваш браузер не поддерживает видео.
+    </video>
+
+    <!-- Основной контент -->
+    <div class="content-container">
+        <h1>Узнать больше</h1>
+        
+        <div class="learn-more-text">
+           Данный сайт был создан для того,что бы в последующем использовать его как: игру в сфере математики , в ходе которого пользователь получает информацию о конкретной теме, так же планировалось использовать сайт для будущих программистов, которым важны базовые знания о создании сайта.Данный сайт очень гибок в плане настроек,имеет возможность изменить тему (с неравенства на ...).Ограничить лишь может - ваше воображение!
+        </div>
+
+        <div class="button-container">
+            <button class="back-button">Назад на главную</button>
+        </div>
+    </div>
+
+    <script>
+        // Обработчик для кнопки "Назад на главную"
+        document.querySelector('.back-button').addEventListener('click', function() {
+            // Укажите правильный путь к вашей главной странице
+            // Например:
+            window.location.href = '../main.html'; 
+            // Или если главная страница в той же папке:
+            // window.location.href = 'index.html';
+            // Или если это корень сайта:
+            // window.location.href = '/';
+        });
+
+        // Проверка загрузки видео (дополнительно)
+        const video = document.getElementById('background-video');
+        video.addEventListener('error', function() {
+            console.error('Ошибка загрузки видео. Проверьте путь к файлу:', video.querySelector('source').src);
+            // Можно добавить fallback-фон, если видео не загрузится
+            document.body.style.background = "linear-gradient(135deg, #2d3436, #000)";
+        });
+
+        // Удаляем старый обработчик, если он есть
+        const backButton = document.querySelector('.back-button');
+        if (backButton) {
+            backButton.removeEventListener('click', () => {});
+        }
+
+        // Создаем новый обработчик для кнопки "Назад на главную"
+        const newBackButton = document.createElement('button');
+        newBackButton.className = 'back-button';
+        newBackButton.textContent = 'Назад на главную';
+        newBackButton.addEventListener('click', function() {
+            window.location.href = '../main.html'; // Укажите путь к главной странице
+        });
+
+        // Вставляем новую кнопку в контейнер
+        const buttonContainer = document.querySelector('.button-container');
+        if (buttonContainer) {
+            buttonContainer.innerHTML = ''; // Очищаем контейнер
+            buttonContainer.appendChild(newBackButton); // Добавляем новую кнопку
+        }
+    </script>
+</body>
+</html>
