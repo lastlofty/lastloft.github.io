@@ -1,0 +1,207 @@
+
+    /* Основные переменные для цветов и анимаций */
+    :root {
+        --primary: #6c5ce7;
+        --secondary: #a29bfe;
+        --accent: #fd79a8;
+        --dark: #2d3436;
+        --light: #f5f6fa;
+        --success: #00b894;
+        --danger: #d63031;
+        --warning: #fdcb6e;
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    body {
+        font-family: 'Montserrat', sans-serif;
+        color: var(--light);
+        overflow-x: hidden;
+        position: relative;
+        min-height: 100vh;
+        background: linear-gradient(135deg, var(--dark), #000);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        margin: 0;
+    }
+
+    #background-video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+        opacity: 0.3;
+    }
+
+    h1 {
+        font-family: 'Orbitron', sans-serif;
+        text-align: center;
+        margin-bottom: 30px;
+        color: var(--accent);
+        text-shadow: 0 0 10px rgba(253, 121, 168, 0.5);
+        font-size: 2.5rem;
+        letter-spacing: 2px;
+        position: relative;
+    }
+
+    h1::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        border-radius: 3px;
+    }
+
+    /* Контейнер контента */
+    .content-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 90%;
+        max-width: 900px;
+        padding: 30px;
+        background-color: rgba(45, 52, 54, 0.85);
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        margin-bottom: 20px;
+        transition: var(--transition);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .content-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Стиль для iframe с игрой */
+    iframe {
+        width: 100%;
+        max-width: 800px;
+        height: 500px;
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        transition: box-shadow 0.3s ease;
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    iframe:hover {
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Кнопка "Назад" */
+    .back-button {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 12px 25px;
+        background: linear-gradient(45deg, var(--primary), var(--secondary));
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        transition: var(--transition);
+        font-weight: bold;
+        box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .back-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: 0.5s;
+    }
+
+    .back-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(108, 92, 231, 0.6);
+    }
+
+    .back-button:hover::before {
+        left: 100%;
+    }
+
+    /* Сообщение об ошибке */
+    #iframe-error-message {
+        background-color: rgba(214, 48, 49, 0.2);
+        padding: 15px;
+        border-radius: 10px;
+        border-left: 3px solid var(--danger);
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    /* Индикатор загрузки */
+    #loading-indicator {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 2em;
+        color: var(--accent);
+    }
+
+    /* Анимации */
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate__animated {
+        animation-duration: 0.5s;
+    }
+
+    /* Адаптивность */
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 2rem;
+        }
+
+        .content-container {
+            padding: 20px;
+        }
+
+        iframe {
+            height: 400px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        h1 {
+            font-size: 1.8rem;
+        }
+
+        iframe {
+            height: 300px;
+        }
+
+        .back-button {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+        }
+    }
