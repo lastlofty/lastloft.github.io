@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Интерактивная игра Wordwall</title>
+  <meta name="description" content="Игра Wordwall для проверки знаний.">
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+
+<body>
+    <!-- Фоновое видео -->
+    <video autoplay muted loop id="background-video">
+        <source src="../assets/Video/видео.mp4" type="video/mp4">
+        <source src="путь_к_вашему_видео.webm" type="video/webm">
+        <source src="assets/Video/large.ogg" type="video/ogg">
+        <img src="assets/img/image.jpg" alt="Фоновое видео с абстрактными фигурами">
+        Ваш браузер не поддерживает видео.
+    </video>
+
+    <!-- Контейнер для контента -->
+    <div class="content-container">
+        <h1>Интерактивная игра Wordwall</h1>
+        <!-- Iframe с Wordwall -->
+        <iframe src="https://wordwall.net/ru/embed/aca1ba175c564a938d0b50aaeb841e77?themeId=21&templateId=69&fontStackId=0"
+            frameborder="0" allowfullscreen
+            onload="iframeLoaded()" onerror="iframeError()"></iframe>
+
+        <p id="iframe-error-message" style="display: none; color: red;">
+            Не удалось загрузить игру. Пожалуйста, проверьте ваше подключение к интернету.
+        </p>
+        <!-- Кнопка "Назад на главную" -->
+        <a href="../main.html" class="back-button">Назад на главную</a>
+    </div>
+
+    <script>
+        function iframeLoaded() {
+            document.getElementById('iframe-error-message').style.display = 'none';
+        }
+
+        function iframeError() {
+            document.getElementById('iframe-error-message').style.display = 'block';
+        }
+    </script>
+    
+    
+</body>
+
+</html>

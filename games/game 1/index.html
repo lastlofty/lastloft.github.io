@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Викторина по Неравенствам</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+        --primary: #6c5ce7;
+        --secondary: #a29bfe;
+        --accent: #fd79a8;
+        --dark: #2d3436;
+        --light: #f5f6fa;
+        --success: #00b894;
+        --danger: #d63031;
+        --warning: #fdcb6e;
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    body {
+        font-family: 'Montserrat', sans-serif;
+        color: var(--light);
+        overflow: hidden;
+        position: relative;
+        height: 100vh;
+        background: linear-gradient(135deg, var(--dark), #000);
+        margin: 0;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    #background-video {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        min-width: 100%;
+        min-height: 100%;
+        z-index: -1;
+        opacity: 0.3;
+        object-fit: cover;
+    }
+
+    h1 {
+        font-family: 'Orbitron', sans-serif;
+        text-align: center;
+        margin-bottom: 30px;
+        color: var(--accent);
+        text-shadow: 0 0 10px rgba(253, 121, 168, 0.5);
+        font-size: 2.5rem;
+        letter-spacing: 2px;
+    }
+
+    .button {
+        background: linear-gradient(45deg, var(--primary), var(--secondary));
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        padding: 12px 25px;
+        font-weight: bold;
+        box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: var(--transition);
+        font-family: 'Montserrat', sans-serif;
+        margin: 10px;
+    }
+
+    .button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(108, 92, 231, 0.6);
+    }
+
+    .content-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 30px;
+        background-color: rgba(45, 52, 54, 0.85);
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        position: relative;
+        overflow: hidden;
+        transform: translateY(0);
+        transition: var(--transition);
+    }
+
+    .content-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Стили для кнопок ответов */
+    #answer-buttons {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin: 20px 0;
+    }
+
+    #answer-buttons button {
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        padding: 15px;
+        color: white;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        backdrop-filter: blur(5px);
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    #answer-buttons button:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Стили для правильных/неправильных ответов */
+    #answer-buttons button.correct {
+        background: linear-gradient(45deg, var(--success), #00cec9);
+        border-color: var(--success);
+        animation: pulse 0.5s;
+    }
+
+    #answer-buttons button.incorrect {
+        background: linear-gradient(45deg, var(--danger), #e17055);
+        border-color: var(--danger);
+    }
+
+    /* Стиль для кнопки "Следующий вопрос" */
+    #next-button {
+        display: none;
+        margin: 20px auto 0;
+        background: linear-gradient(45deg, var(--accent), #e84393);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        padding: 12px 30px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: var(--transition);
+        box-shadow: 0 5px 15px rgba(253, 121, 168, 0.4);
+    }
+
+    #next-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(253, 121, 168, 0.6);
+    }
+
+    /* Стиль для таймера */
+    #timer {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-weight: bold;
+        color: var(--warning);
+        font-size: 1.1rem;
+    }
+
+    /* Стиль для результата */
+    #result {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: var(--accent);
+        min-height: 30px;
+    }
+
+    /* Стиль для вопроса */
+    #question-text {
+        font-size: 1.4rem;
+        line-height: 1.5;
+        margin-bottom: 30px;
+        font-weight: 600;
+        text-align: center;
+        padding: 0 20px;
+    }
+
+    /* Анимация для правильных ответов */
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+
+    /* Стиль для кнопки музыки */
+    #musicButton {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        z-index: 100;
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50px;
+        padding: 10px 20px;
+        color: white;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: var(--transition);
+        backdrop-filter: blur(5px);
+    }
+
+    #musicButton:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Медиа-запросы для мобильных устройств */
+    @media (max-width: 768px) {
+        #answer-buttons {
+            grid-template-columns: 1fr;
+        }
+        
+        .content-container {
+            padding: 20px;
+        }
+        
+        #question-text {
+            font-size: 1.2rem;
+        }
+        
+        h1 {
+            font-size: 2rem;
+        }
+    }
+  </style>
+</head>
+
+<body>
+
+  <video autoplay muted loop id="background-video">
+    <source src="../assets/Video/fotor.mp4" type="video/mp4">
+    Ваш браузер не поддерживает видео.
+  </video>
+
+  <div style="position: relative; z-index: 2; text-align: center; margin-top: 20px;" class="animate__animated animate__fadeInDown">
+    <a href="../main.html" class="button">Назад на главную</a>
+  </div>
+
+  <h1 class="animate__animated animate__fadeInDown">Викторина по Неравенствам</h1>
+
+  <div id="quiz" class="animate__animated animate__fadeIn content-container">
+    <div id="timer">Время: <span id="time-left">100</span> сек</div>
+    <div id="question-container" class="question">
+      <p id="question-text"></p>
+      <div id="answer-buttons">
+        <!-- Кнопки ответов будут добавляться сюда -->
+      </div>
+    </div>
+    <button id="next-button">Следующий вопрос →</button>
+  </div>
+
+  <div id="result"></div>
+
+  <!-- Звуки для правильных ответов -->
+  <audio id="correct-sound-1" src="../assets/files/Звук колокольчика с правильным ответом (звонок).mp3" preload="auto"></audio>
+  <audio id="correct-sound-2" src="../assets/files/z_uki-_kto-hochet-stat-mlnrm_-pra_ilnyy-ot_et.mp3" preload="auto"></audio>
+  <audio id="correct-sound-3" src="../assets/files/Звук правильного ответа из передачи 100 к 1.mp3" preload="auto"></audio>
+  
+  <!-- Звуки для неправильных ответов -->
+  <audio id="incorrect-sound-1" src="../assets/files/z_uk-proigrysha.mp3" preload="auto"></audio>
+  <audio id="incorrect-sound-2" src="../assets/files/otvet-nevernyy.mp3" preload="auto"></audio>
+  <audio id="incorrect-sound-3" src="../assets/files/6_sto-k-odnomu-ne-pra_ilnyy-ot_e.mp3" preload="auto"></audio>
+
+  <!-- Кнопка и музыка для фона -->
+  <button id="musicButton">Включить музыку</button>
+  <audio id="backgroundMusic" loop muted style="display:none;">
+    <source src="../assets/files/фоновая музыка.mp3" type="audio/mpeg">
+    Ваш браузер не поддерживает элемент audio.
+  </audio>
+
+<script>
+// Полный массив вопросов викторины по неравенствам
+const questions = [
+    {
+        question: "Решите неравенство: |2x - 1| > 5",
+        answers: [
+            {text: "x < -2 или x > 3", correct: true},
+            {text: "-2 < x < 3", correct: false},
+            {text: "x < -3 или x > 2", correct: false},
+            {text: "-3 < x < 2", correct: false}
+        ]
+    },
+    {
+        question: "Найдите область определения функции y = √(4 - x²)",
+        answers: [
+            {text: "x ≤ -2 или x ≥ 2", correct: false},
+            {text: "-2 ≤ x ≤ 2", correct: true},
+            {text: "x < -2 или x > 2", correct: false},
+            {text: "-2 < x < 2", correct: false}
+        ]
+    },
+    {
+        question: "Решите неравенство: (x - 1) / (x + 2) < 0",
+        answers: [
+            {text: "x < -2 или x > 1", correct: false},
+            {text: "-2 < x < 1", correct: true},
+            {text: "x > 1", correct: false},
+            {text: "x < -2", correct: false}
+        ]
+    },
+    {
+        question: "Определите знак выражения: (x² + 1) / (x - 3) при x < 3",
+        answers: [
+            {text: "Положительный", correct: false},
+            {text: "Отрицательный", correct: true},
+            {text: "Невозможно определить", correct: false},
+            {text: "Равно нулю", correct: false}
+        ]
+    },
+    {
+        question: "Решите неравенство: x² + 2x + 1 > 0",
+        answers: [
+            {text: "x ≠ -1", correct: true},
+            {text: "x > -1", correct: false},
+            {text: "x < -1", correct: false},
+            {text: "Все действительные числа", correct: false}
+        ]
+    },
+    {
+        question: "Какое неравенство выполняется для всех x?",
+        answers: [
+            {text: "x² > 0", correct: false},
+            {text: "|x| ≥ 0", correct: true},
+            {text: "x > -x", correct: false},
+            {text: "x < x", correct: false}
+        ]
+    },
+    {
+        question: "Решите систему неравенств: x > 2 и x < 5",
+        answers: [
+            {text: "x > 5", correct: false},
+            {text: "x < 2", correct: false},
+            {text: "2 < x < 5", correct: true},
+            {text: "x > 2 или x < 5", correct: false}
+        ]
+    },
+    {
+        question: "Решите неравенство: -3x ≥ 9",
+        answers: [
+            {text: "x ≥ -3", correct: false},
+            {text: "x ≤ -3", correct: true},
+            {text: "x ≥ 3", correct: false},
+            {text: "x ≤ 3", correct: false}
+        ]
+    },
+    {
+        question: "Решите неравенство: 2x + 5 < 11",
+        answers: [
+            {text: "x > 3", correct: false},
+            {text: "x < 3", correct: true},
+            {text: "x > 8", correct: false},
+            {text: "x < 8", correct: false}
+        ]
+    },
+    {
+        question: "Что означает запись 'x ∈ (a; b)'?",
+        answers: [
+            {text: "x больше или равно a и меньше или равно b", correct: false},
+            {text: "x больше a и меньше b", correct: true},
+            {text: "x меньше a или больше b", correct: false},
+            {text: "x равно a или b", correct: false}
+        ]
+    },
+    {
+        question: "Решите неравенство: x² - 5x + 6 > 0",
+        answers: [
+            {text: "x < 2 или x > 3", correct: true},
+            {text: "2 < x < 3", correct: false},
+            {text: "x < -3 или x > -2", correct: false},
+            {text: "Все действительные числа", correct: false}
+        ]
+    },
+    {
+        question: "При каких x выражение √(x - 3) имеет смысл?",
+        answers: [
+            {text: "x > 3", correct: false},
+            {text: "x ≥ 3", correct: true},
+            {text: "x ≤ 3", correct: false},
+            {text: "Для любых x", correct: false}
+        ]
+    },
+    {
+        question: "Решите неравенство: 1/x < 2",
+        answers: [
+            {text: "x < 0 или x > 0.5", correct: true},
+            {text: "x > 0.5", correct: false},
+            {text: "x < 0.5", correct: false},
+            {text: "0 < x < 0.5", correct: false}
+        ]
+    },
+    {
+        question: "Какое из неравенств не имеет решений?",
+        answers: [
+            {text: "x² + 1 < 0", correct: true},
+            {text: "x² - 1 < 0", correct: false},
+            {text: "|x| < 1", correct: false},
+            {text: "x + 1 < x", correct: true}
+        ]
+    },
+    {
+        question: "Решите неравенство: |x - 2| ≤ 3",
+        answers: [
+            {text: "-1 ≤ x ≤ 5", correct: true},
+            {text: "x ≤ -1 или x ≥ 5", correct: false},
+            {text: "-5 ≤ x ≤ 1", correct: false},
+            {text: "x ≤ 5", correct: false}
+        ]
+    }
+];
+
+// Переменные для управления состоянием викторины
+let currentQuestionIndex = 0;  // Индекс текущего вопроса
+let correctAnswers = 0;        // Количество правильных ответов
+let answeredQuestions = 0;     // Количество отвеченных вопросов
+let timeLeft = 100;            // Время на ответ (в секундах)
+let timerInterval;             // Идентификатор интервала таймера
+let questionsOrder = [];       // Массив для хранения порядка вопросов
+
+// Получаем элементы DOM
+const questionContainer = document.getElementById('question-container');
+const questionText = document.getElementById('question-text');
+const answerButtons = document.getElementById('answer-buttons');
+const nextButton = document.getElementById('next-button');
+const resultDiv = document.getElementById('result');
+const timerSpan = document.getElementById('time-left');
+
+// Элементы для звуковых эффектов
+const correctSounds = [
+    document.getElementById('correct-sound-1'),
+    document.getElementById('correct-sound-2'),
+    document.getElementById('correct-sound-3')
+];
+const incorrectSounds = [
+    document.getElementById('incorrect-sound-1'),
+    document.getElementById('incorrect-sound-2'),
+    document.getElementById('incorrect-sound-3')
+];
+
+// Функция запуска викторины
+function startQuiz() {
+    currentQuestionIndex = 0;
+    correctAnswers = 0;
+    answeredQuestions = 0;
+    timeLeft = 100;
+    timerSpan.textContent = timeLeft;
+
+    // Создаем и перемешиваем порядок вопросов
+    questionsOrder = Array.from(Array(questions.length).keys());
+    shuffleArray(questionsOrder);
+
+    showQuestion();
+}
+
+// Функция перемешивания массива (алгоритм Фишера-Йетса)
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+// Функция отображения текущего вопроса
+function showQuestion() {
+    resetState();
+
+    // Получаем вопрос по текущему индексу (с учетом порядка)
+    let questionIndex = questionsOrder[currentQuestionIndex];
+    let question = questions[questionIndex];
+    questionText.textContent = question.question;
+
+    // Создаем кнопки для каждого варианта ответа
+    question.answers.forEach(answer => {
+        const button = document.createElement('button');
+        button.textContent = answer.text;
+        button.classList.add('btn');
+        button.dataset.correct = answer.correct;
+        button.addEventListener('click', selectAnswer);
+        answerButtons.appendChild(button);
+    });
+
+    startTimer();
+}
+
+// Функция сброса состояния перед показом нового вопроса
+function resetState() {
+    // Очищаем кнопки ответов
+    while (answerButtons.firstChild) {
+        answerButtons.removeChild(answerButtons.firstChild);
+    }
+    nextButton.style.display = 'none';
+    resultDiv.textContent = '';
+}
+
+// Функция обработки выбора ответа
+function selectAnswer(e) {
+    const selectedButton = e.target;
+    const isCorrect = selectedButton.dataset.correct === 'true';
+
+    clearInterval(timerInterval); // Останавливаем таймер
+
+    if (isCorrect) {
+        selectedButton.classList.add('correct');
+        correctAnswers++;
+        // Воспроизведение случайного звука для правильного ответа
+        const randomCorrectSound = correctSounds[Math.floor(Math.random() * correctSounds.length)];
+        randomCorrectSound.currentTime = 0;
+        randomCorrectSound.play();
+    } else {
+        selectedButton.classList.add('incorrect');
+        // Воспроизведение случайного звука для неправильного ответа
+        const randomIncorrectSound = incorrectSounds[Math.floor(Math.random() * incorrectSounds.length)];
+        randomIncorrectSound.currentTime = 0;
+        randomIncorrectSound.play();
+    }
+
+    // Делаем все кнопки неактивными после выбора ответа
+    Array.from(answerButtons.children).forEach(button => {
+        if (button.dataset.correct === 'true') {
+            button.classList.add('correct');
+        }
+        button.disabled = true;
+    });
+
+    answeredQuestions++;
+    updateResult();
+
+    // Показываем кнопку "Следующий вопрос" или завершаем викторину
+    if (currentQuestionIndex < questions.length - 1) {
+        nextButton.style.display = 'block';
+    } else {
+        nextButton.style.display = 'none';
+        resultDiv.textContent = `Викторина завершена! Вы ответили правильно на ${correctAnswers} из ${answeredQuestions} вопросов.`;
+    }
+}
+
+// Функция обновления результата
+function updateResult() {
+    resultDiv.textContent = `Вы ответили правильно на ${correctAnswers} из ${answeredQuestions} вопросов.`;
+}
+
+// Функция запуска таймера
+function startTimer() {
+    timerSpan.textContent = timeLeft;
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        timerSpan.textContent = timeLeft;
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            answeredQuestions++;
+            updateResult();
+            // При окончании времени показываем правильные ответы
+            Array.from(answerButtons.children).forEach(button => {
+                button.disabled = true;
+                if (button.dataset.correct === 'true') {
+                    button.classList.add('correct');
+                }
+            });
+            // Воспроизводим звук для случая, когда время вышло
+            const randomIncorrectSound = incorrectSounds[Math.floor(Math.random() * incorrectSounds.length)];
+            randomIncorrectSound.currentTime = 0;
+            randomIncorrectSound.play();
+            
+            // Показываем кнопку "Следующий вопрос" или завершаем викторину
+            if (currentQuestionIndex < questions.length - 1) {
+                nextButton.style.display = 'block';
+            } else {
+                nextButton.style.display = 'none';
+                resultDiv.textContent = `Викторина завершена! Вы ответили правильно на ${correctAnswers} из ${answeredQuestions} вопросов.`;
+            }
+        }
+    }, 1000);
+}
+
+// Обработчик кнопки "Следующий вопрос"
+nextButton.addEventListener('click', () => {
+    if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        clearInterval(timerInterval);
+        timeLeft = 100;
+        showQuestion();
+    }
+});
+
+// Управление фоновой музыкой
+const musicButton = document.getElementById('musicButton');
+const backgroundMusic = document.getElementById('backgroundMusic');
+
+musicButton.addEventListener('click', () => {
+    if (backgroundMusic.paused) {
+        backgroundMusic.muted = false;
+        backgroundMusic.play();
+        musicButton.textContent = 'Выключить музыку';
+    } else {
+        backgroundMusic.pause();
+        musicButton.textContent = 'Включить музыку';
+    }
+});
+
+// Запуск викторины при загрузке страницы
+startQuiz();
+</script>
+
+</body>
+</html>

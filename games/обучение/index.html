@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проект по математике: Неравенства</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c5ce7; /* Основной цвет */
+            --secondary: #a29bfe; /* Второстепенный цвет */
+            --accent: #fd79a8; /* Акцентный цвет */
+            --dark: #2d3436; /* Темный фон */
+            --light: #f5f6fa; /* Светлый текст */
+            --success: #00b894; /* Цвет успеха */
+            --danger: #d63031; /* Цвет ошибки */
+            --warning: #fdcb6e; /* Цвет предупреждения */
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Анимация переходов */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--light);
+            background: linear-gradient(135deg, var(--dark), #000);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .content-container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: rgba(45, 52, 54, 0.85);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .content-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(253, 121, 168, 0.5);
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 3px;
+        }
+
+        h2 {
+            color: var(--secondary);
+            margin: 25px 0 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid rgba(162, 155, 254, 0.3);
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            color: var(--warning);
+            margin: 20px 0 10px;
+            font-size: 1.2rem;
+        }
+
+        .nav {
+            background-color: rgba(108, 92, 231, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 25px 0;
+            border: 1px solid rgba(162, 155, 254, 0.2);
+        }
+
+        .nav ul {
+            list-style-type: none;
+            columns: 2;
+        }
+
+        .nav li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .nav li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: var(--secondary);
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .nav a:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .definition {
+            background-color: rgba(108, 92, 231, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .definition::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            pointer-events: none;
+        }
+
+        .example {
+            background-color: rgba(253, 121, 168, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            position: relative;
+        }
+
+        .example::before {
+            content: 'Пример';
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: var(--accent);
+            color: white;
+            padding: 3px 10px;
+            font-size: 0.8rem;
+            border-radius: 0 0 0 5px;
+        }
+
+        .solution {
+            font-style: italic;
+            color: var(--success);
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed rgba(0, 184, 148, 0.3);
+        }
+
+        .important {
+            background-color: rgba(214, 48, 49, 0.1);
+            border-left: 4px solid var(--danger);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        tr:hover {
+            background-color: rgba(108, 92, 231, 0.1);
+        }
+
+        .math-expr {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.2rem;
+            color: var(--warning);
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 5px 0;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9em;
+            color: var(--secondary);
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: var(--transition);
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .back-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.6);
+        }
+
+        .back-button:hover::before {
+            left: 100%;
+        }
+
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        section {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .math-expr:hover {
+            animation: pulse 1s infinite;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .content-container {
+                padding: 20px;
+                margin: 20px;
+                transform: none !important;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .nav ul {
+                columns: 1;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
+        .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <video autoplay loop muted playsinline class="background-video">
+        <source src="../assets/Video/видео.mp4" type="video/mp4">
+        Ваш браузер не поддерживает видео.
+    </video>
+    <div class="content-container">
+        <h1>Неравенства в математике</h1>
+        
+        <div class="nav">
+            <h2>Оглавление</h2>
+            <ul>
+                <li><a href="#intro">1. Введение в неравенства</a></li>
+                <li><a href="#types">2. Основные виды неравенств</a></li>
+                <li><a href="#properties">3. Свойства неравенств</a></li>
+                <li><a href="#methods">4. Методы решения неравенств</a></li>
+                <li><a href="#module">5. Неравенства с модулем</a></li>
+                <li><a href="#systems">6. Системы неравенств</a></li>
+                <li><a href="#application">7. Применение неравенств</a></li>
+            </ul>
+        </div>
+        
+        <section id="intro">
+            <h2>1. Введение в неравенства</h2>
+            
+            <div class="definition">
+                <p><strong>Неравенства</strong> - это математические выражения, содержащие знаки сравнения:</p>
+                <ul>
+                    <li>&gt; (больше)</li>
+                    <li>&lt; (меньше)</li>
+                    <li>&ge; (больше или равно)</li>
+                    <li>&le; (меньше или равно)</li>
+                    <li>&ne; (не равно)</li>
+                </ul>
+            </div>
+            
+            <p>Неравенства, как и уравнения, могут содержать переменные, и их решение заключается в нахождении всех значений переменных, при которых неравенство становится верным.</p>
+            
+            <div class="example">
+                <p><strong>Пример простого неравенства:</strong></p>
+                <p class="math-expr">3x + 2 &gt; 8</p>
+                <p class="solution">Решение: 3x &gt; 6 ⇒ x &gt; 2</p>
+            </div>
+        </section>
+        
+        <section id="types">
+            <h2>2. Основные виды неравенств</h2>
+            
+            <h3>2.1. Линейные неравенства</h3>
+            <p>Линейные неравенства имеют вид: <span class="math-expr">ax + b &gt; 0</span> (или другие знаки сравнения).</p>
+            
+            <div class="example">
+                <p><strong>Пример:</strong></p>
+                <p class="math-expr">2x - 5 &lt; 7</p>
+                <p class="solution">Решение:<br>
+                2x &lt; 12<br>
+                x &lt; 6</p>
+            </div>
+            
+            <h3>2.2. Квадратные неравенства</h3>
+            <p>Квадратные неравенства имеют вид: <span class="math-expr">ax² + bx + c &gt; 0</span>.</p>
+            
+            <div class="example">
+                <p><strong>Пример:</strong></p>
+                <p class="math-expr">x² - 5x + 6 &gt; 0</p>
+                <p class="solution">Решение:<br>
+                1. Находим корни: x₁=2, x₂=3<br>
+                2. Строим параболу (ветви вверх)<br>
+                3. Ответ: x ∈ (-∞; 2) ∪ (3; +∞)</p>
+            </div>
+            
+            <h3>2.3. Дробно-рациональные неравенства</h3>
+            <p>Дробно-рациональные неравенства имеют вид: <span class="math-expr">P(x)/Q(x) &gt; 0</span>.</p>
+            
+            <div class="example">
+                <p><strong>Пример:</strong></p>
+                <p class="math-expr">(x-1)/(x+2) ≤ 0</p>
+                <p class="solution">Решение методом интервалов:<br>
+                1. Критические точки: x = -2 (знаменатель), x = 1 (числитель)<br>
+                2. Ответ: x ∈ (-2; 1]</p>
+            </div>
+        </section>
+        
+        <section id="properties">
+            <h2>3. Свойства неравенств</h2>
+            
+            <div class="important">
+                <p>Основные свойства неравенств:</p>
+                <ol>
+                    <li>Если <span class="math-expr">a &gt; b</span>, то <span class="math-expr">b &lt; a</span> (антисимметричность)</li>
+                    <li>Если <span class="math-expr">a &gt; b</span> и <span class="math-expr">b &gt; c</span>, то <span class="math-expr">a &gt; c</span> (транзитивность)</li>
+                    <li>Если <span class="math-expr">a &gt; b</span>, то <span class="math-expr">a + c &gt; b + c</span></li>
+                    <li>Если <span class="math-expr">a &gt; b</span> и <span class="math-expr">c &gt; 0</span>, то <span class="math-expr">ac &gt; bc</span></li>
+                    <li>Если <span class="math-expr">a &gt; b</span> и <span class="math-expr">c &lt; 0</span>, то <span class="math-expr">ac &lt; bc</span> (знак меняется!)</li>
+                    <li>Для положительных чисел: если <span class="math-expr">a &gt; b</span>, то <span class="math-expr">1/a &lt; 1/b</span></li>
+                </ol>
+            </div>
+            
+            <div class="example">
+                <p><strong>Пример применения свойств:</strong></p>
+                <p class="math-expr">-3x &gt; 12</p>
+                <p class="solution">Решение:<br>
+                Делим обе части на -3 (отрицательное число), поэтому знак меняется:<br>
+                x &lt; -4</p>
+            </div>
+        </section>
+        
+        <section id="methods">
+            <h2>4. Методы решения неравенств</h2>
+            
+            <h3>4.1. Метод интервалов</h3>
+            <p>Алгоритм метода интервалов:</p>
+            <ol>
+                <li>Найти нули функции (точки, где выражение равно 0)</li>
+                <li>Отметить их на числовой прямой</li>
+                <li>Определить знаки на получившихся интервалах</li>
+                <li>Выбрать нужные интервалы согласно знаку неравенства</li>
+            </ol>
+            
+            <div class="example">
+                <p><strong>Пример:</strong></p>
+                <p class="math-expr">(x-3)(x+1)(x-5) ≥ 0</p>
+                <p class="solution">Решение:<br>
+                1. Критические точки: x = -1, 3, 5<br>
+                2. Интервалы: (-∞;-1), (-1;3), (3;5), (5;+∞)<br>
+                3. Знаки: -, +, -, +<br>
+                4. Ответ: x ∈ [-1;3] ∪ [5;+∞)</p>
+            </div>
+            
+            <h3>4.2. Графический метод</h3>
+            <p>Алгоритм графического метода:</p>
+            <ol>
+                <li>Построить графики обеих частей неравенства</li>
+                <li>Определить точки пересечения</li>
+                <li>Выбрать интервалы, где выполняется неравенство</li>
+            </ol>
+            
+            <h3>4.3. Замена переменной</h3>
+            <div class="example">
+                <p><strong>Пример:</strong></p>
+                <p class="math-expr">3<sup>2x</sup> - 4·3<sup>x</sup> + 3 > 0</p>
+                <p class="solution">Решение:<br>
+                1. Замена: t = 3<sup>x</sup><br>
+                2. Получаем: t² - 4t + 3 > 0<br>
+                3. Решаем: t ∈ (-∞;1) ∪ (3;+∞)<br>
+                4. Возвращаемся к x: 3<sup>x</sup> < 1 ⇒ x < 0<br>
+                3<sup>x</sup> > 3 ⇒ x > 1<br>
+                5. Ответ: x ∈ (-∞;0) ∪ (1;+∞)</p>
+            </div>
+        </section>
+        
+        <section id="module">
+            <h2>5. Неравенства с модулем</h2>
+            
+            <div class="definition">
+                <p>Основные типы неравенств с модулем:</p>
+                <table>
+                    <tr>
+                        <th>Тип неравенства</th>
+                        <th>Эквивалентная запись</th>
+                    </tr>
+                    <tr>
+                        <td>|f(x)| &lt; a, где a > 0</td>
+                        <td>-a &lt; f(x) &lt; a</td>
+                    </tr>
+                    <tr>
+                        <td>|f(x)| &gt; a, где a > 0</td>
+                        <td>f(x) &lt; -a или f(x) &gt; a</td>
+                    </tr>
+                    <tr>
+                        <td>|f(x)| &lt; |g(x)|</td>
+                        <td>f²(x) &lt; g²(x)</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="example">
+                <p><strong>Пример:</strong></p>
+                <p class="math-expr">|2x - 3| ≤ 5</p>
+                <p class="solution">Решение:<br>
+                -5 ≤ 2x - 3 ≤ 5<br>
+                -2 ≤ 2x ≤ 8<br>
+                -1 ≤ x ≤ 4</p>
+            </div>
+        </section>
+        
+        <section id="systems">
+            <h2>6. Системы неравенств</h2>
+            
+            <p>Система неравенств решается путем решения каждого неравенства отдельно и нахождения пересечения всех решений.</p>
+            
+            <div class="example">
+                <p><strong>Пример:</strong></p>
+                <p class="math-expr">
+                { 3x - 2 > 4<br>
+                { 5 - x ≥ 1
+                </p>
+                <p class="solution">Решение:<br>
+                1. 3x > 6 ⇒ x > 2<br>
+                2. -x ≥ -4 ⇒ x ≤ 4<br>
+                Ответ: x ∈ (2; 4]</p>
+            </div>
+        </section>
+        
+        <section id="application">
+            <h2>7. Применение неравенств</h2>
+            
+            <p>Неравенства находят широкое применение в различных областях:</p>
+            
+            <ul>
+                <li><strong>В экономике:</strong> оптимизация прибыли, анализ затрат</li>
+                <li><strong>В физике:</strong> определение диапазонов возможных значений величин</li>
+                <li><strong>В геометрии:</strong> неравенство треугольника (сумма любых двух сторон больше третьей)</li>
+                <li><strong>В теории вероятностей:</strong> оценка вероятностей событий</li>
+                <li><strong>В компьютерных алгоритмах:</strong> анализ сложности алгоритмов</li>
+            </ul>
+            
+            <div class="example">
+                <p><strong>Пример из геометрии:</strong></p>
+                <p>Для треугольника со сторонами a, b, c выполняются неравенства:</p>
+                <p class="math-expr">a + b > c, a + c > b, b + c > a</p>
+            </div>
+        </section>
+        
+        <div class="footer">
+            <p>Проект по математике на тему "Неравенства"</p>
+            <p>© 2025, Выполнил: Охотников богдан 0907-45</p>
+            <a href="../main.html" class="back-button">На главную</a>
+        </div>
+    </div>
+</body>
+</html>
