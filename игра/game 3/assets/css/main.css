@@ -1,0 +1,189 @@
+/* Основные переменные для цветов и анимаций */
+:root {
+    --primary: #6c5ce7; /* Основной цвет */
+    --secondary: #a29bfe; /* Второстепенный цвет */
+    --accent: #fd79a8; /* Акцентный цвет */
+    --dark: #2d3436; /* Темный фон */
+    --light: #f5f6fa; /* Светлый текст */
+    --success: #00b894; /* Цвет успеха */
+    --danger: #d63031; /* Цвет ошибки */
+    --warning: #fdcb6e; /* Цвет предупреждения */
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Анимация переходов */
+}
+
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Montserrat', sans-serif; /* Основной шрифт */
+    color: var(--light);
+    background: linear-gradient(135deg, var(--dark), #000); /* Градиентный фон */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+#background-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -100;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 3.5em;
+    margin-bottom: 10px;
+    color: var(--accent); /* Акцентный цвет */
+    text-shadow: 0 0 10px rgba(253, 121, 168, 0.5);
+    font-family: 'Orbitron', sans-serif;
+}
+
+#home-button {
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: var(--transition);
+    box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+}
+
+#home-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(108, 92, 231, 0.6);
+}
+
+#home-button i {
+    margin-right: 8px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+}
+
+.drum {
+    background-color: rgba(45, 52, 54, 0.85);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: var(--transition);
+}
+
+.drum:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+}
+
+.number-display {
+    font-size: 5em;
+    font-weight: bold;
+    margin-bottom: 25px;
+    color: var(--warning); /* Цвет номера */
+    text-shadow: 0 0 10px rgba(253, 121, 168, 0.5);
+    min-height: 60px;
+}
+
+#spin-button {
+    background: linear-gradient(45deg, var(--success), #55efc4);
+    color: white;
+    padding: 18px 35px;
+    font-size: 1.3em;
+    cursor: pointer;
+    border: none;
+    border-radius: 50px;
+    transition: var(--transition);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+
+#spin-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+#spin-button:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.problem-display {
+    background-color: rgba(45, 52, 54, 0.85);
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    width: 100%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.problem-display p {
+    font-size: 1.4em;
+    line-height: 1.6;
+}
+
+.number-display.spinning {
+    animation: rotate 0.5s linear infinite;
+  }
+
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2.5em;
+    }
+
+    .drum {
+        padding: 30px;
+    }
+
+    .number-display {
+        font-size: 4em;
+    }
+
+    #spin-button {
+        font-size: 1.1em;
+    }
+
+    .problem-display p {
+        font-size: 1.2em;
+    }
+}
+
+#background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    object-fit: cover;
+    opacity: 0.3;
+}
