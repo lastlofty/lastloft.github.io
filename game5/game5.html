@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Правильная пирамида - Тест</title>
+    <style>
+    :root {
+        --primary: #6c5ce7;
+        --secondary: #a29bfe;
+        --accent: #fd79a8;
+        --dark: #2d3436;
+        --light: #f5f6fa;
+        --success: #00b894;
+        --danger: #d63031;
+        --warning: #fdcb6e;
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    body {
+        font-family: 'Montserrat', sans-serif;
+        color: var(--light);
+        background: linear-gradient(135deg, var(--dark), #000);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    #question-container {
+        background-color: rgba(45, 52, 54, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(10px);
+        margin-bottom: 20px;
+        width: 90%;
+        max-width: 600px;
+        text-align: center;
+        transition: var(--transition);
+    }
+
+    #question-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+    }
+
+    input[type="text"] {
+        width: 85%;
+        max-width: 400px;
+        padding: 12px;
+        margin: 15px 0;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 6px;
+        font-size: 16px;
+        background-color: rgba(0, 0, 0, 0.3);
+        color: var(--light);
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: border-color 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+        border-color: var(--primary);
+        outline: none;
+    }
+
+    button {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: var(--light);
+        border: none;
+        padding: 12px 25px;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: var(--transition);
+        box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+        margin-top: 20px;
+    }
+
+    button:hover {
+        background: linear-gradient(135deg, var(--secondary), var(--primary));
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(108, 92, 231, 0.6);
+    }
+
+    button:active {
+        transform: translateY(0);
+        box-shadow: 0 4px 10px rgba(108, 92, 231, 0.4);
+    }
+
+    button.solution-button {
+        background: linear-gradient(135deg, var(--accent), var(--warning));
+        color: var(--dark);
+        border: none;
+        padding: 12px 25px;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: var(--transition);
+        box-shadow: 0 5px 15px rgba(253, 121, 168, 0.4);
+        margin-top: 10px;
+    }
+
+    button.solution-button:hover {
+        background: linear-gradient(135deg, var(--warning), var(--accent));
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(253, 121, 168, 0.6);
+    }
+
+    button.solution-button:active {
+        transform: translateY(0);
+        box-shadow: 0 4px 10px rgba(253, 121, 168, 0.4);
+    }
+
+    .button-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 600px;
+    }
+
+    @media (max-width: 768px) {
+        body {
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 10px;
+        }
+
+        #question-container {
+            width: 100%;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            font-size: 14px;
+            padding: 10px;
+        }
+    }
+
+    .fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+    .fade-out {
+  animation: fadeOut 0.5s ease-in-out;
+}
+
+
+
+</style>
+</head>
+<body>
+<video autoplay muted loop id="background-video" style="position: fixed; right: 0; bottom: 0; min-width: 100%; min-height: 100%; z-index: -1;">
+    <source src="background.mp4" type="video/mp4">
+    Ваш браузер не поддерживает видео.
+</video>
+<script>
+    // Вопросы по теме "правильная пирамида"
+    const questions = [
+        { question: "Сколько граней у правильной пирамиды с квадратным основанием?", answer: "5", difficulty: 1, detailedSolution: "Правильная пирамида с квадратным основанием имеет 4 боковые грани и 1 основание. Всего 5 граней." },
+        { question: "Как называется высота, проведённая из вершины пирамиды к центру основания?", answer: "Апофема", difficulty: 1, detailedSolution: "Высота, проведённая из вершины пирамиды к центру основания, называется апофемой. Это ключевое понятие в геометрии пирамид." },
+        { question: "Чему равна площадь основания правильной треугольной пирамиды со стороной основания 6?", answer: "15.59", difficulty: 2, detailedSolution: "Площадь треугольника вычисляется по формуле: (a^2 * √3) / 4. Подставляем a = 6: (6^2 * √3) / 4 ≈ 15.59." },
+        { question: "Сколько рёбер у правильной пирамиды с пятиугольным основанием?", answer: "10", difficulty: 2, detailedSolution: "Правильная пирамида с пятиугольным основанием имеет 5 рёбер основания и 5 боковых рёбер. Всего 10 рёбер." },
+        { question: "Чему равен объём правильной пирамиды с высотой 9 и площадью основания 12?", answer: "36", difficulty: 3, detailedSolution: "Объём пирамиды вычисляется по формуле: (1/3) * площадь основания * высота. Подставляем: (1/3) * 12 * 9 = 36." },
+        { question: "Какой угол образует апофема с плоскостью основания в правильной пирамиде?", answer: "Угол наклона", difficulty: 3, detailedSolution: "Угол наклона - это угол между апофемой и основанием пирамиды. Он зависит от высоты и радиуса основания." },
+        { question: "Сколько вершин у правильной пирамиды с шестиугольным основанием?", answer: "7", difficulty: 1, detailedSolution: "У правильной пирамиды с шестиугольным основанием 6 вершин на основании и 1 вершина - апекс. Всего 7 вершин." },
+        { question: "Чему равна сумма длин всех рёбер правильной пирамиды с квадратным основанием, если длина одного ребра основания 4?", answer: "32", difficulty: 2, detailedSolution: "Сумма длин рёбер равна 4 * 8 = 32, так как у пирамиды 8 рёбер." },
+        { question: "Как называется отрезок, соединяющий вершину пирамиды с любой точкой на основании?", answer: "Апофема", difficulty: 1, detailedSolution: "Апофема - это отрезок, соединяющий вершину пирамиды с любой точкой на её основании." },
+        { question: "Чему равна площадь боковой поверхности правильной пирамиды с треугольным основанием и апофемой 5?", answer: "15", difficulty: 3, detailedSolution: "Площадь боковой поверхности пирамиды с треугольным основанием равна (периметр основания * апофема) / 2." },
+        { question: "Сколько граней у правильной пирамиды с восьмиугольным основанием?", answer: "9", difficulty: 2, detailedSolution: "У пирамиды с восьмиугольным основанием 8 боковых граней и 1 основание. Всего 9 граней." },
+        { question: "Чему равен угол между двумя боковыми гранями правильной пирамиды?", answer: "Двугранный угол", difficulty: 3, detailedSolution: "Двугранный угол - это угол между плоскостями двух боковых граней. Он зависит от формы основания и высоты пирамиды." },
+        { question: "Как называется отрезок, соединяющий вершину пирамиды с центром основания?", answer: "Высота", difficulty: 1, detailedSolution: "Высота пирамиды - это перпендикуляр, проведённый из её вершины в плоскость основания." },
+        { question: "Чему равна площадь основания правильной пирамиды с пятиугольным основанием, если сторона основания равна 6?", answer: "61.94", difficulty: 3, detailedSolution: "Площадь пятиугольника можно вычислить по формуле: (1/4) * √5 * (5 + 2 * √5) * a^2. Подставляем a = 6." },
+        { question: "Сколько рёбер у правильной пирамиды с десятиугольным основанием?", answer: "20", difficulty: 2, detailedSolution: "У правильной пирамиды с десятиугольным основанием 10 рёбер основания и 10 боковых рёбер. Всего 20 рёбер." },
+        { question: "Чему равен объём правильной пирамиды с высотой 12 и площадью основания 20?", answer: "80", difficulty: 3, detailedSolution: "Объём пирамиды равен (1/3) * площадь основания * высота. Подставляем: (1/3) * 20 * 12." },
+        { question: "Какой угол образует высота пирамиды с боковой гранью?", answer: "Прямой угол", difficulty: 1, detailedSolution: "Высота пирамиды образует прямой угол с плоскостью основания и боковыми гранями." },
+        { question: "Сколько вершин у правильной пирамиды с семиугольным основанием?", answer: "8", difficulty: 1, detailedSolution: "У правильной пирамиды с семиугольным основанием 7 вершин: 6 на основании и 1 - апекс." },
+        { question: "Чему равна сумма длин всех рёбер правильной пирамиды с треугольным основанием, если длина одного ребра основания 3?", answer: "18", difficulty: 2, detailedSolution: "Сумма длин рёбер равна 3 * 6 = 18, так как у пирамиды 6 рёбер." },
+        { question: "Чему равна площадь боковой поверхности правильной пирамиды с квадратным основанием и апофемой 7?", answer: "49", difficulty: 3, detailedSolution: "Площадь боковой поверхности пирамиды с квадратным основанием равна 4 * (1/2) * периметр основания * апофема." }
+    ];
+
+    let currentQuestionIndex = 0;
+    let currentDifficulty = 1;
+    let shuffledQuestions = {1: [], 2: [], 3: []};
+    let questionIndices = {1: 0, 2: 0, 3: 0};
+
+    // Функция для перемешивания массива (алгоритм Фишера-Йетса)
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    // Инициализация - перемешиваем вопросы по уровням сложности
+    function initializeQuestions() {
+        // Разделяем вопросы по уровням сложности
+        const easyQuestions = questions.filter(q => q.difficulty === 1);
+        const mediumQuestions = questions.filter(q => q.difficulty === 2);
+        const hardQuestions = questions.filter(q => q.difficulty === 3);
+        
+        // Перемешиваем вопросы каждого уровня
+        shuffledQuestions[1] = shuffleArray([...easyQuestions]);
+        shuffledQuestions[2] = shuffleArray([...mediumQuestions]);
+        shuffledQuestions[3] = shuffleArray([...hardQuestions]);
+    }
+
+    function showQuestion() {
+        const questionContainer = document.getElementById('question-container');
+        const questionsForLevel = shuffledQuestions[currentDifficulty];
+        
+        if (questionIndices[currentDifficulty] < questionsForLevel.length) {
+            const question = questionsForLevel[questionIndices[currentDifficulty]];
+            questionContainer.innerHTML = `<p>${question.question}</p>`;
+        } else {
+            // Если вопросы для текущего уровня закончились
+            if (currentDifficulty < 3) {
+                currentDifficulty++;
+                questionIndices[currentDifficulty] = 0;
+                showQuestion();
+            } else {
+                questionContainer.innerHTML = '<p>Поздравляем! Вы ответили на все вопросы!</p>';
+                document.getElementById('answer').style.display = 'none';
+                document.querySelector('button').style.display = 'none';
+                document.querySelector('.solution-button').style.display = 'none';
+            }
+        }
+    }
+
+    function checkAnswer() {
+        const userAnswer = document.getElementById('answer').value.trim();
+        const questionsForLevel = shuffledQuestions[currentDifficulty];
+        const currentQuestion = questionsForLevel[questionIndices[currentDifficulty]];
+        
+        if (!currentQuestion) {
+            alert('Вопрос не найден!');
+            return;
+        }
+
+        if (userAnswer.toLowerCase() === currentQuestion.answer.toLowerCase()) {
+            alert('Правильно!');
+            questionIndices[currentDifficulty]++;
+            
+            // Переходим к следующему вопросу или увеличиваем сложность
+            if (questionIndices[currentDifficulty] >= shuffledQuestions[currentDifficulty].length && currentDifficulty < 3) {
+                currentDifficulty++;
+                questionIndices[currentDifficulty] = 0;
+                alert(`Переход на уровень сложности ${currentDifficulty}`);
+            }
+        } else {
+            alert(`Неправильно. Правильный ответ: ${currentQuestion.answer}`);
+        }
+        
+        document.getElementById('answer').value = '';
+        showQuestion();
+    }
+
+    function goToMainPage() {
+        window.location.href = 'index.html';
+    }
+
+    function showSolution() {
+        const questionsForLevel = shuffledQuestions[currentDifficulty];
+        const currentQuestion = questionsForLevel[questionIndices[currentDifficulty]];
+        
+        if (currentQuestion) {
+            alert(`Решение: ${currentQuestion.detailedSolution}`);
+        } else {
+            alert('Решение недоступно.');
+        }
+    }
+
+    // Инициализация при загрузке страницы
+    window.onload = function() {
+        initializeQuestions();
+        showQuestion();
+    };
+</script>
+
+<div id="question-container"></div>
+<input type="text" id="answer" placeholder="Ваш ответ">
+<div class="button-container">
+    <button onclick="checkAnswer()">Ответить</button>
+    <button onclick="goToMainPage()">Назад на главную</button>
+    <button class="solution-button" onclick="showSolution()">Показать решение</button>
+</div>
+</body>
+</html>

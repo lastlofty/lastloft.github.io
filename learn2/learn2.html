@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Учебное пособие: Правильные пирамиды</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c5ce7; /* Основной цвет */
+            --secondary: #a29bfe; /* Второстепенный цвет */
+            --accent: #fd79a8; /* Акцентный цвет */
+            --dark: #2d3436; /* Темный фон */
+            --light: #f5f6fa; /* Светлый текст */
+            --success: #00b894; /* Цвет успеха */
+            --danger: #d63031; /* Цвет ошибки */
+            --warning: #fdcb6e; /* Цвет предупреждения */
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Анимация переходов */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--light);
+            background: linear-gradient(135deg, var(--dark), #000);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .content-container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: rgba(45, 52, 54, 0.85);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .content-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(253, 121, 168, 0.5);
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 3px;
+        }
+
+        h2 {
+            color: var(--secondary);
+            margin: 25px 0 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid rgba(162, 155, 254, 0.3);
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        h3 {
+            color: var(--warning);
+            margin: 20px 0 10px;
+            font-size: 1.2rem;
+        }
+
+        .nav {
+            background-color: rgba(108, 92, 231, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 25px 0;
+            border: 1px solid rgba(162, 155, 254, 0.2);
+        }
+
+        .nav ul {
+            list-style-type: none;
+            columns: 2;
+        }
+
+        .nav li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .nav li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: var(--secondary);
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .nav a:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .definition {
+            background-color: rgba(108, 92, 231, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .definition::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            pointer-events: none;
+        }
+
+        .example {
+            background-color: rgba(253, 121, 168, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            position: relative;
+        }
+
+        .example::before {
+            content: 'Пример';
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: var(--accent);
+            color: white;
+            padding: 3px 10px;
+            font-size: 0.8rem;
+            border-radius: 0 0 0 5px;
+        }
+
+        .solution {
+            font-style: italic;
+            color: var(--success);
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed rgba(0, 184, 148, 0.3);
+        }
+
+        .important {
+            background-color: rgba(214, 48, 49, 0.1);
+            border-left: 4px solid var(--danger);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        tr:hover {
+            background-color: rgba(108, 92, 231, 0.1);
+        }
+
+        .math-expr {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.2rem;
+            color: var(--warning);
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 5px 0;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9em;
+            color: var(--secondary);
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--light);
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            text-decoration: none;
+            border-radius: 25px;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.6);
+        }
+
+        .button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .button:hover::before {
+            left: 100%;
+        }
+
+        .button-solution {
+            display: inline-block;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: var(--light);
+            background: linear-gradient(45deg, var(--success), var(--accent));
+            text-decoration: none;
+            border-radius: 20px;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(0, 184, 148, 0.4);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .button-solution:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 184, 148, 0.6);
+        }
+
+        .button-solution::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .button-solution:hover::before {
+            left: 100%;
+        }
+
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        section {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .math-expr:hover {
+            animation: pulse 1s infinite;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .content-container {
+                padding: 15px;
+                margin: 10px;
+                border-radius: 10px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+
+            .nav ul {
+                columns: 1;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            .button, .button-solution {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+
+            .math-expr {
+                font-size: 1rem;
+            }
+        }
+
+        .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        
+    </style>
+    <script>
+        function toggleSolution(id) {
+            const solution = document.getElementById(id);
+            if (solution.style.display === 'none' || solution.style.display === '') {
+                solution.style.display = 'block';
+            } else {
+                solution.style.display = 'none';
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Геометрия правильных пирамид</h1>
+        
+        <div class="nav">
+            <h2>Оглавление</h2>
+            <ul>
+                <li><a href="#definition">1. Определение и свойства</a></li>
+                <li><a href="#elements">2. Основные элементы</a></li>
+                <li><a href="#formulas">3. Формулы и вычисления</a></li>
+                <li><a href="#tasks">4. Типовые задачи</a></li>
+                <li><a href="#examples">5. Примеры решений</a></li>
+                <li><a href="#applications">6. Применение в реальном мире</a></li>
+            </ul>
+        </div>
+
+        <section id="definition">
+            <h2>1. Определение и свойства</h2>
+            
+            <div class="definition">
+                <p><strong>Правильная пирамида</strong> — это пирамида, у которой:</p>
+                <ol>
+                    <li>Основание — правильный многоугольник (квадрат, треугольник и т.д.)</li>
+                    <li>Боковые рёбра равны между собой</li>
+                    <li>Высота проходит через центр основания</li>
+                </ol>
+            </div>
+
+            <div class="pyramid-model">
+                <div class="pyramid-base"></div>
+                <div class="pyramid-front"></div>
+                <div class="pyramid-back"></div>
+                <div class="pyramid-left"></div>
+                <div class="pyramid-right"></div>
+            </div>
+
+            <div class="important">
+                <p><strong>Ключевые свойства:</strong></p>
+                <ul>
+                    <li>Все боковые грани — равные равнобедренные треугольники</li>
+                    <li>Апофема (высота боковой грани) одинакова для всех граней</li>
+                    <li>Углы наклона боковых рёбер к плоскости основания равны</li>
+                    <li>Центр основания совпадает с проекцией вершины</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="elements">
+            <h2>2. Основные элементы</h2>
+            
+            <table>
+                <tr>
+                    <th>Элемент</th>
+                    <th>Обозначение</th>
+                    <th>Описание</th>
+                </tr>
+                <tr>
+                    <td>Основание</td>
+                    <td>ABCD</td>
+                    <td>Правильный n-угольник</td>
+                </tr>
+                <tr>
+                    <td>Вершина</td>
+                    <td>S</td>
+                    <td>Точка, не лежащая в плоскости основания</td>
+                </tr>
+                <tr>
+                    <td>Боковое ребро</td>
+                    <td>SA, SB, ...</td>
+                    <td>Отрезок, соединяющий вершину с вершиной основания</td>
+                </tr>
+                <tr>
+                    <td>Высота</td>
+                    <td>SO</td>
+                    <td>Перпендикуляр из вершины к основанию</td>
+                </tr>
+                <tr>
+                    <td>Апофема</td>
+                    <td>SH</td>
+                    <td>Высота боковой грани</td>
+                </tr>
+            </table>
+
+            <div class="example">
+                <p><strong>Пример обозначений для четырёхугольной пирамиды:</strong></p>
+                <p class="math-expr">SABCD - пирамида<br>
+                ABCD - квадратное основание<br>
+                SO = h - высота<br>
+                SH = l - апофема</p>
+            </div>
+        </section>
+
+        <section id="formulas">
+            <h2>3. Формулы и вычисления</h2>
+            
+            <h3>3.1. Для правильной n-угольной пирамиды</h3>
+            
+            <div class="formula-box">
+                <p><strong>Площадь боковой поверхности:</strong></p>
+                <p class="math-expr">S<sub>бок</sub> = ½ × P × l</p>
+                <p>где P — периметр основания, l — апофема</p>
+            </div>
+            
+            <div class="formula-box">
+                <p><strong>Площадь полной поверхности:</strong></p>
+                <p class="math-expr">S<sub>полн</sub> = S<sub>бок</sub> + S<sub>осн</sub></p>
+            </div>
+            
+            <div class="formula-box">
+                <p><strong>Объём:</strong></p>
+                <p class="math-expr">V = ⅓ × S<sub>осн</sub> × h</p>
+            </div>
+
+            <h3>3.2. Для правильной четырёхугольной пирамиды</h3>
+            
+            <div class="formula-box">
+                <p><strong>Связь апофемы и высоты:</strong></p>
+                <p class="math-expr">l = √(h² + (a/2)²)</p>
+                <p>где a — сторона квадратного основания</p>
+            </div>
+            
+            <div class="example">
+                <p><strong>Вывод формулы апофемы:</strong></p>
+                <p>1. Рассмотрим прямоугольный треугольник SOH (O - центр основания, H - середина стороны AB)</p>
+                <p>2. По теореме Пифагора: SH² = SO² + OH² ⇒ l² = h² + (a/2)²</p>
+            </div>
+        </section>
+
+        <section id="tasks">
+            <h2>4. Типовые задачи</h2>
+            
+            <h3>4.1. Нахождение элементов по известным параметрам</h3>
+            
+            <div class="example">
+                <p><strong>Задача 1:</strong> Найдите высоту правильной четырёхугольной пирамиды, если сторона основания равна 6 см, а боковое ребро 5 см.</p>
+                <button class="button-solution" onclick="toggleSolution('solution1')">Показать решение</button>
+                <div id="solution1" class="solution" style="display:none;">
+                    <p><strong>Решение:</strong></p>
+                    <p>1. Находим диагональ основания: d = a√2 = 6√2 см</p>
+                    <p>2. Половина диагонали: AO = d/2 = 3√2 см</p>
+                    <p>3. Из ΔSAO по теореме Пифагора: h = √(SA² - AO²) = √(25 - 18) = √7 см</p>
+                </div>
+            </div>
+            
+            <h3>4.2. Задачи на сечения</h3>
+            
+            <div class="example">
+                <p><strong>Задача 2:</strong> В правильной треугольной пирамиде со стороной основания 4 см проведите сечение через середину высоты параллельно основанию. Найдите площадь сечения.</p>
+                <button class="button-solution" onclick="toggleSolution('solution2')">Показать решение</button>
+                <div id="solution2" class="solution" style="display:none;">
+                    <p><strong>Решение:</strong></p>
+                    <p>1. Сечение — подобный основанию треугольник с коэффициентом подобия ½</p>
+                    <p>2. Площадь основания: S<sub>осн</sub> = (a²√3)/4 = 4√3 см²</p>
+                    <p>3. Площадь сечения: S = (½)² × 4√3 = √3 см²</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="examples">
+            <h2>5. Примеры решений</h2>
+            
+            <div class="example">
+                <p><strong>Пример 1. Полная поверхность пирамиды</strong></p>
+                <p>В правильной четырёхугольной пирамиде сторона основания равна 8 см, а высота — 3 см. Найдите площадь полной поверхности.</p>
+                <div class="solution">
+                    <p>1. Площадь основания: S<sub>осн</sub> = a² = 64 см²</p>
+                    <p>2. Находим апофему: l = √(h² + (a/2)²) = √(9 + 16) = 5 см</p>
+                    <p>3. Площадь боковой поверхности: S<sub>бок</sub> = ½ × 32 × 5 = 80 см²</p>
+                    <p>4. Полная площадь: S = 64 + 80 = 144 см²</p>
+                </div>
+            </div>
+            
+            <div class="example">
+                <p><strong>Пример 2. Объём пирамиды</strong></p>
+                <p>Найдите объём правильной треугольной пирамиды, если сторона основания 6 см, а боковое ребро 5 см.</p>
+                <div class="solution">
+                    <p>1. Площадь основания: S = (6²√3)/4 = 9√3 см²</p>
+                    <p>2. Радиус описанной окружности: R = (a√3)/3 = 2√3 см</p>
+                    <p>3. Высота: h = √(5² - (2√3)²) = √(25 - 12) = √13 см</p>
+                    <p>4. Объём: V = ⅓ × 9√3 × √13 = 3√39 см³</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="applications">
+            <h2>6. Применение в реальном мире</h2>
+            
+            <div class="definition">
+                <p>Пирамидальные конструкции широко используются в архитектуре и инженерии благодаря своей устойчивости и оптимальному распределению нагрузки.</p>
+            </div>
+            
+            <ul>
+                <li><strong>Архитектура:</strong> Пирамиды Гизы, Лувр в Париже, современные небоскрёбы</li>
+                <li><strong>Инженерия:</strong> Антенные конструкции, опоры ЛЭП</li>
+                <li><strong>Природа:</strong> Кристаллические решётки минералов, форма молекулы аммиака</li>
+            </ul>
+            
+            <div class="important">
+                <p><strong>Практическое значение формул:</strong></p>
+                <p>Расчёт материалов для строительства, определение устойчивости конструкций, проектирование освещения (углы падения света на грани).</p>
+            </div>
+        </section>
+
+        <footer>
+            <p>Учебное пособие по геометрии: "Правильные пирамиды"</p>
+            <p>© 2023, Автор: [Ваше имя]</p>
+            <a href="../index.html" class="button">На главную</a>
+        </footer>
+    </div>
+</body>
+</html>
