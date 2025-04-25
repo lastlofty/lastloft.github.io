@@ -374,15 +374,16 @@
             }
         }
 
-        .background-video {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1;
-        }
+         #background-video {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        min-width: 100%;
+        min-height: 100%;
+        z-index: -1;
+        opacity: 0.3;
+        object-fit: cover;
+    }
         
     </style>
     <script>
@@ -397,6 +398,12 @@
     </script>
 </head>
 <body>
+    
+    <video autoplay muted loop id="background-video">
+        <source src="../assets/video/video.mp4" type="video/mp4">
+        Ваш браузер не поддерживает видео.
+      </video>
+    
     <div class="container">
         <h1>Геометрия правильных пирамид</h1>
         
