@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Математические игры | Неравенства</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta property="og:image" content="https://lastlofty.github.io/lastloft.github.io/rikroll.png">
+    <meta property="og:title" content="Математические игры - изучаем неравенства">
+    <meta property="og:description" content="Интерактивные игры для изучения математических неравенств и пирамид">
+    <link rel="icon" href="nagi.ico" type="image/x-icon">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --primary-dark: #5649c7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --accent-dark: #e66797;
+            --dark: #2d3436;
+            --darker: #1e2223;
+            --light: #f5f6fa;
+            --light-gray: #dfe6e9;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --transition-fast: all 0.15s ease-in-out;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+            color: var(--light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 1000px;
+            width: 95%;
+            padding: 30px;
+            background: rgba(45, 52, 54, 0.85);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transform: translateY(0);
+            opacity: 1;
+            transition: var(--transition);
+            margin: 20px;
+        }
+
+        .container.hidden {
+            transform: translateY(20px);
+            opacity: 0;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(253, 121, 168, 0.6);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 3px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--light-gray);
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 15px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            background: rgba(108, 92, 231, 0.15);
+            border: 2px solid var(--primary);
+            border-radius: 15px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.1);
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .button i {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--secondary);
+            transition: var(--transition);
+        }
+
+        .button:hover {
+            transform: translateY(-5px);
+            background: rgba(108, 92, 231, 0.25);
+            box-shadow: 0 10px 25px rgba(108, 92, 231, 0.3);
+            border-color: var(--secondary);
+        }
+
+        .button:hover i {
+            transform: scale(1.1);
+            color: var(--accent);
+        }
+
+        .button:active {
+            transform: translateY(0);
+            box-shadow: 0 5px 10px rgba(108, 92, 231, 0.2);
+        }
+
+        .button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: 0.6s;
+        }
+
+        .button:hover::after {
+            transform: translateX(100%);
+        }
+
+        footer {
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition-fast);
+        }
+
+        footer a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            color: var(--light-gray);
+            font-size: 1.2rem;
+            transition: var(--transition-fast);
+        }
+
+        .social-links a:hover {
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .buttons-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .buttons-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .button {
+                padding: 15px;
+            }
+        }
+
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+        .delay-6 { animation-delay: 0.6s; }
+        .delay-7 { animation-delay: 0.7s; }
+        .delay-8 { animation-delay: 0.8s; }
+        .delay-9 { animation-delay: 0.9s; }
+    </style>
+</head>
+<body>
+    <div id="particles-js" class="particles"></div>
+    
+    <div class="container animate-fade-in">
+        <h1>Математические игры</h1>
+        <p class="subtitle">Изучайте неравенства и правильные пирамиды через увлекательные игры и интерактивные уроки</p>
+        
+        <div class="buttons-grid">
+            <a href="game-1/index.html" class="button animate-fade-in delay-1">
+                <i class="fas fa-dice-one"></i>
+                <span>Игра 1: Основы неравенств</span>
+            </a>
+            <a href="game-2/index.html" class="button animate-fade-in delay-2">
+                <i class="fas fa-dice-two"></i>
+                <span>Игра 2: Продвинутые неравенства</span>
+            </a>
+            <a href="game-3/index.html" class="button animate-fade-in delay-3">
+                <i class="fas fa-dice-three"></i>
+                <span>Игра 3: Комбинированные задачи</span>
+            </a>
+            <a href="game-4/index.html" class="button animate-fade-in delay-4">
+                <i class="fas fa-dice-four"></i>
+                <span>Игра 4: испытания </span>
+            </a>
+            <a href="game5/index.html" class="button animate-fade-in delay-5">
+                <i class="fas fa-dice-five"></i>
+                <span>Игра 5:правильная пирамида</span>
+            </a>
+            <a href="training/index.html" class="button animate-fade-in delay-6">
+                <i class="fas fa-book-open"></i>
+                <span>Обучение: Неравенства</span>
+            </a>
+            <a href="learn2/index.html" class="button animate-fade-in delay-7">
+                <i class="fas fa-book"></i>
+                <span>Обучение: Правильная пирамида</span>
+            </a>
+            <a href="assets/leaderboard/index.html" class="button animate-fade-in delay-8">
+                <i class="fas fa-trophy"></i>
+                <span>Таблица лидеров</span>
+            </a>
+            <a href="assets/about/index.html" class="button animate-fade-in delay-9">
+                <i class="fas fa-info-circle"></i>
+                <span>О проекте</span>
+            </a>
+        </div>
+        
+        <footer>
+            <p>Создано с любовью к математике. <a href="learn/index.html">Узнать больше о проекте</a></p>
+            <div class="social-links">
+                <a href="https://vk.com/lastlofty" aria-label="VK"><i class="fab fa-vk"></i></a>
+                <a href="https://t.me/lastlofty" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+                <a href="https://github.com/lastlofty" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Инициализация частиц
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof particlesJS !== 'undefined') {
+                particlesJS('particles-js', {
+                    particles: {
+                        number: { value: 80, density: { enable: true, value_area: 800 } },
+                        color: { value: "#a29bfe" },
+                        shape: { type: "circle" },
+                        opacity: { value: 0.5, random: true },
+                        size: { value: 3, random: true },
+                        line_linked: { enable: true, distance: 150, color: "#6c5ce7", opacity: 0.3, width: 1 },
+                        move: { enable: true, speed: 3, direction: "none", random: true, straight: false, out_mode: "out" }
+                    },
+                    interactivity: {
+                        detect_on: "canvas",
+                        events: {
+                            onhover: { enable: true, mode: "repulse" },
+                            onclick: { enable: true, mode: "push" }
+                        }
+                    }
+                });
+            }
+            
+            // Плавное появление контента
+            setTimeout(() => {
+                document.querySelector('.container').classList.remove('hidden');
+            }, 100);
+            
+            // Анимация кнопок при загрузке
+            const buttons = document.querySelectorAll('.button');
+            buttons.forEach((btn, index) => {
+                btn.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
+</body>
+</html>
