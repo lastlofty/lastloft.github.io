@@ -1,47 +1,117 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Правильная пирамида - Тест</title>
+    <title>Тест: Правильная пирамида | Геометрия</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
     :root {
         --primary: #6c5ce7;
+        --primary-dark: #5649c7;
         --secondary: #a29bfe;
         --accent: #fd79a8;
+        --accent-dark: #e66797;
         --dark: #2d3436;
+        --darker: #1e2223;
         --light: #f5f6fa;
+        --lighter: #ffffff;
         --success: #00b894;
         --danger: #d63031;
         --warning: #fdcb6e;
         --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        --border-radius: 12px;
+    }
+
+    * {
+        box-sizing: border-box;
     }
 
     body {
         font-family: 'Montserrat', sans-serif;
         color: var(--light);
-        background: linear-gradient(135deg, var(--dark), #000);
+        background: linear-gradient(135deg, var(--darker), var(--dark));
         margin: 0;
-        padding: 0;
+        padding: 20px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
-        height: 100vh;
+        min-height: 100vh;
+        line-height: 1.6;
     }
 
+    .container {
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    header {
+        text-align: center;
+        margin-bottom: 30px;
+        width: 100%;
+    }
+
+    h1 {
+        color: var(--lighter);
+        margin-bottom: 10px;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .difficulty-indicator {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .difficulty-level {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        color: var(--light);
+        transition: var(--transition);
+    }
+
+    .level-active {
+        transform: scale(1.2);
+        box-shadow: 0 0 15px rgba(108, 92, 231, 0.7);
+    }
+
+    .level-1 { background-color: var(--success); }
+    .level-2 { background-color: var(--warning); color: var(--dark); }
+    .level-3 { background-color: var(--danger); }
+
     #question-container {
-        background-color: rgba(45, 52, 54, 0.85);
+        background-color: rgba(45, 52, 54, 0.9);
         border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 20px;
+        border-radius: var(--border-radius);
         padding: 30px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(10px);
-        margin-bottom: 20px;
-        width: 90%;
-        max-width: 600px;
+        backdrop-filter: blur(8px);
+        margin-bottom: 25px;
+        width: 100%;
         text-align: center;
         transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+    }
+
+    #question-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
     }
 
     #question-container:hover {
@@ -49,133 +119,288 @@
         box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
     }
 
+    #question-text {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+        font-weight: 500;
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .input-group {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
     input[type="text"] {
-        width: 85%;
-        max-width: 400px;
-        padding: 12px;
-        margin: 15px 0;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 6px;
+        width: 100%;
+        padding: 14px 20px;
+        margin: 10px 0;
+        border: 2px solid rgba(255, 255, 255, 0.15);
+        border-radius: var(--border-radius);
         font-size: 16px;
         background-color: rgba(0, 0, 0, 0.3);
-        color: var(--light);
-        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-        transition: border-color 0.3s ease;
+        color: var(--lighter);
+        box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2);
+        transition: var(--transition);
     }
 
     input[type="text"]:focus {
         border-color: var(--primary);
         outline: none;
+        box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.3);
     }
 
-    button {
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        color: var(--light);
-        border: none;
-        padding: 12px 25px;
-        border-radius: 6px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: var(--transition);
-        box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+    .button-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
         margin-top: 20px;
     }
 
+    button {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: var(--lighter);
+        border: none;
+        padding: 14px 28px;
+        border-radius: var(--border-radius);
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+        flex: 1;
+        min-width: 180px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
     button:hover {
-        background: linear-gradient(135deg, var(--secondary), var(--primary));
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(108, 92, 231, 0.6);
+        background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(108, 92, 231, 0.6);
     }
 
     button:active {
-        transform: translateY(0);
-        box-shadow: 0 4px 10px rgba(108, 92, 231, 0.4);
+        transform: translateY(1px);
+        box-shadow: 0 4px 12px rgba(108, 92, 231, 0.4);
     }
 
-    button.solution-button {
-        background: linear-gradient(135deg, var(--accent), var(--warning));
-        color: var(--dark);
-        border: none;
-        padding: 12px 25px;
-        border-radius: 6px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: var(--transition);
+    button.secondary {
+        background: linear-gradient(135deg, var(--dark), var(--darker));
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    button.secondary:hover {
+        background: linear-gradient(135deg, var(--darker), var(--dark));
+    }
+
+    button.solution {
+        background: linear-gradient(135deg, var(--accent), var(--accent-dark));
         box-shadow: 0 5px 15px rgba(253, 121, 168, 0.4);
-        margin-top: 10px;
     }
 
-    button.solution-button:hover {
-        background: linear-gradient(135deg, var(--warning), var(--accent));
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(253, 121, 168, 0.6);
+    button.solution:hover {
+        background: linear-gradient(135deg, var(--accent-dark), var(--accent));
     }
 
-    button.solution-button:active {
-        transform: translateY(0);
-        box-shadow: 0 4px 10px rgba(253, 121, 168, 0.4);
-    }
-
-    .button-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+    .progress-container {
         width: 100%;
-        max-width: 600px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: var(--border-radius);
+        margin: 20px 0;
+        height: 10px;
+        overflow: hidden;
+    }
+
+    .progress-bar {
+        height: 100%;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        border-radius: var(--border-radius);
+        transition: width 0.4s ease;
+    }
+
+    .stats {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 20px;
+        color: var(--secondary);
+        font-size: 0.9rem;
+    }
+
+    .feedback {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: var(--border-radius);
+        text-align: center;
+        font-weight: 500;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: var(--transition);
+    }
+
+    .feedback.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .feedback.correct {
+        background-color: rgba(0, 184, 148, 0.2);
+        color: var(--success);
+        border: 1px solid var(--success);
+    }
+
+    .feedback.incorrect {
+        background-color: rgba(214, 48, 49, 0.2);
+        color: var(--danger);
+        border: 1px solid var(--danger);
+    }
+
+    .solution-container {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: rgba(253, 203, 110, 0.1);
+        border: 1px solid rgba(253, 203, 110, 0.3);
+        border-radius: var(--border-radius);
+        color: var(--warning);
+        display: none;
+    }
+
+    .solution-container.show {
+        display: block;
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .pyramid-icon {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 15px;
+        fill: var(--primary);
     }
 
     @media (max-width: 768px) {
         body {
-            flex-direction: column;
-            justify-content: flex-start;
-            padding: 10px;
+            padding: 15px;
         }
 
         #question-container {
-            width: 100%;
             padding: 20px;
-            margin-bottom: 15px;
         }
 
-        input[type="text"] {
-            width: 100%;
-            font-size: 14px;
+        #question-text {
+            font-size: 1.1rem;
+        }
+
+        .button-group {
+            flex-direction: column;
+            gap: 10px;
         }
 
         button {
             width: 100%;
-            font-size: 14px;
-            padding: 10px;
+            padding: 12px;
         }
     }
 
-    .fade-in {
-  animation: fadeIn 0.5s ease-in-out;
-}
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+    @media (max-width: 480px) {
+        h1 {
+            font-size: 1.5rem;
+        }
 
-    .fade-out {
-  animation: fadeOut 0.5s ease-in-out;
-}
+        #question-text {
+            font-size: 1rem;
+        }
 
-
-
-</style>
+        input[type="text"] {
+            padding: 12px 15px;
+            font-size: 14px;
+        }
+    }
+    </style>
 </head>
 <body>
-<video autoplay muted loop id="background-video" style="position: fixed; right: 0; bottom: 0; min-width: 100%; min-height: 100%; z-index: -1;">
-    <source src="../assets/video/video.mp4" type="video/mp4">
-    Ваш браузер не поддерживает видео.
-</video>
-<script>
+    <div class="container">
+        <header>
+            <svg class="pyramid-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M11 3L1 21h20L11 3zm1.5 15.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm0-5c-.83 0-1.5-.67-1.5-1.5v-3c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v3c0 .83-.67 1.5-1.5 1.5z"/>
+            </svg>
+            <h1>Тест: Правильная пирамида</h1>
+            <p>Проверьте свои знания геометрии</p>
+            
+            <div class="difficulty-indicator">
+                <div class="difficulty-level level-1 level-active" id="level-1">1</div>
+                <div class="difficulty-level level-2" id="level-2">2</div>
+                <div class="difficulty-level level-3" id="level-3">3</div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+        </header>
+
+        <div id="question-container">
+            <div id="question-text"></div>
+            
+            <div class="input-group">
+                <input type="text" id="answer" placeholder="Введите ваш ответ..." autocomplete="off">
+            </div>
+            
+            <div class="feedback" id="feedback"></div>
+            
+            <div class="solution-container" id="solution-container">
+                <strong>Решение:</strong> <span id="solution-text"></span>
+            </div>
+            
+            <div class="button-group">
+                <button id="submit-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 16L12 13L15 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 13V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9.22 7.99993H14.78C16.63 7.99993 17.54 10.1199 16.3 11.3599L13.02 14.6399C12.45 15.2099 11.55 15.2099 10.98 14.6399L7.7 11.3599C6.46 10.1199 7.37 7.99993 9.22 7.99993Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Ответить
+                </button>
+                <button class="solution" id="solution-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9.08997 9.00008C9.32507 8.33175 9.78912 7.76819 10.3999 7.40921C11.0107 7.05024 11.7289 6.91902 12.4271 7.03879C13.1254 7.15857 13.7588 7.52161 14.215 8.06361C14.6713 8.60561 14.921 9.2916 14.92 10.0001C14.92 12.0001 11.92 13.0001 11.92 13.0001" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 17H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Решение
+                </button>
+                <button class="secondary" id="home-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 22V12H15V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    На главную
+                </button>
+            </div>
+            
+            <div class="stats">
+                <span id="question-counter">Вопрос 1 из 20</span>
+                <span id="score">Счет: 0</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
     // Вопросы по теме "правильная пирамида"
     const questions = [
         { question: "Сколько граней у правильной пирамиды с квадратным основанием?", answer: "5", difficulty: 1, detailedSolution: "Правильная пирамида с квадратным основанием имеет 4 боковые грани и 1 основание. Всего 5 граней." },
         { question: "Как называется высота, проведённая из вершины пирамиды к центру основания?", answer: "Апофема", difficulty: 1, detailedSolution: "Высота, проведённая из вершины пирамиды к центру основания, называется апофемой. Это ключевое понятие в геометрии пирамид." },
-        { question: "Чему равна площадь основания правильной треугольной пирамиды со стороной основания 6?", answer: "15.59", difficulty: 2, detailedSolution: "Площадь треугольника вычисляется по формуле: (a^2 * √3) / 4. Подставляем a = 6: (6^2 * √3) / 4 ≈ 15.59." },
+        { question: "Чему равна площадь основания правильной треугольной пирамиды со стороной основания 6?", answer: "15.59", difficulty: 2, detailedSolution: "Площадь треугольника вычисляется по формуле: (a² * √3) / 4. Подставляем a = 6: (6² * √3) / 4 ≈ 15.59." },
         { question: "Сколько рёбер у правильной пирамиды с пятиугольным основанием?", answer: "10", difficulty: 2, detailedSolution: "Правильная пирамида с пятиугольным основанием имеет 5 рёбер основания и 5 боковых рёбер. Всего 10 рёбер." },
         { question: "Чему равен объём правильной пирамиды с высотой 9 и площадью основания 12?", answer: "36", difficulty: 3, detailedSolution: "Объём пирамиды вычисляется по формуле: (1/3) * площадь основания * высота. Подставляем: (1/3) * 12 * 9 = 36." },
         { question: "Какой угол образует апофема с плоскостью основания в правильной пирамиде?", answer: "Угол наклона", difficulty: 3, detailedSolution: "Угол наклона - это угол между апофемой и основанием пирамиды. Он зависит от высоты и радиуса основания." },
@@ -186,7 +411,7 @@
         { question: "Сколько граней у правильной пирамиды с восьмиугольным основанием?", answer: "9", difficulty: 2, detailedSolution: "У пирамиды с восьмиугольным основанием 8 боковых граней и 1 основание. Всего 9 граней." },
         { question: "Чему равен угол между двумя боковыми гранями правильной пирамиды?", answer: "Двугранный угол", difficulty: 3, detailedSolution: "Двугранный угол - это угол между плоскостями двух боковых граней. Он зависит от формы основания и высоты пирамиды." },
         { question: "Как называется отрезок, соединяющий вершину пирамиды с центром основания?", answer: "Высота", difficulty: 1, detailedSolution: "Высота пирамиды - это перпендикуляр, проведённый из её вершины в плоскость основания." },
-        { question: "Чему равна площадь основания правильной пирамиды с пятиугольным основанием, если сторона основания равна 6?", answer: "61.94", difficulty: 3, detailedSolution: "Площадь пятиугольника можно вычислить по формуле: (1/4) * √5 * (5 + 2 * √5) * a^2. Подставляем a = 6." },
+        { question: "Чему равна площадь основания правильной пирамиды с пятиугольным основанием, если сторона основания равна 6?", answer: "61.94", difficulty: 3, detailedSolution: "Площадь пятиугольника можно вычислить по формуле: (1/4) * √5 * (5 + 2 * √5) * a². Подставляем a = 6." },
         { question: "Сколько рёбер у правильной пирамиды с десятиугольным основанием?", answer: "20", difficulty: 2, detailedSolution: "У правильной пирамиды с десятиугольным основанием 10 рёбер основания и 10 боковых рёбер. Всего 20 рёбер." },
         { question: "Чему равен объём правильной пирамиды с высотой 12 и площадью основания 20?", answer: "80", difficulty: 3, detailedSolution: "Объём пирамиды равен (1/3) * площадь основания * высота. Подставляем: (1/3) * 20 * 12." },
         { question: "Какой угол образует высота пирамиды с боковой гранью?", answer: "Прямой угол", difficulty: 1, detailedSolution: "Высота пирамиды образует прямой угол с плоскостью основания и боковыми гранями." },
@@ -197,17 +422,24 @@
 
     let currentQuestionIndex = 0;
     let currentDifficulty = 1;
+    let score = 0;
     let shuffledQuestions = {1: [], 2: [], 3: []};
     let questionIndices = {1: 0, 2: 0, 3: 0};
+    let totalQuestions = questions.length;
 
-    // Функция для перемешивания массива (алгоритм Фишера-Йетса)
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-    }
+    // DOM элементы
+    const questionText = document.getElementById('question-text');
+    const answerInput = document.getElementById('answer');
+    const feedbackDiv = document.getElementById('feedback');
+    const solutionContainer = document.getElementById('solution-container');
+    const solutionText = document.getElementById('solution-text');
+    const questionCounter = document.getElementById('question-counter');
+    const scoreSpan = document.getElementById('score');
+    const progressBar = document.getElementById('progress-bar');
+    const difficultyLevels = [document.getElementById('level-1'), document.getElementById('level-2'), document.getElementById('level-3')];
+    const submitBtn = document.getElementById('submit-btn');
+    const solutionBtn = document.getElementById('solution-btn');
+    const homeBtn = document.getElementById('home-btn');
 
     // Инициализация - перемешиваем вопросы по уровням сложности
     function initializeQuestions() {
@@ -220,15 +452,33 @@
         shuffledQuestions[1] = shuffleArray([...easyQuestions]);
         shuffledQuestions[2] = shuffleArray([...mediumQuestions]);
         shuffledQuestions[3] = shuffleArray([...hardQuestions]);
+        
+        updateProgress();
+        updateQuestionCounter();
     }
 
+    // Функция для перемешивания массива (алгоритм Фишера-Йетса)
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    // Показать текущий вопрос
     function showQuestion() {
-        const questionContainer = document.getElementById('question-container');
         const questionsForLevel = shuffledQuestions[currentDifficulty];
         
         if (questionIndices[currentDifficulty] < questionsForLevel.length) {
             const question = questionsForLevel[questionIndices[currentDifficulty]];
-            questionContainer.innerHTML = `<p>${question.question}</p>`;
+            questionText.textContent = question.question;
+            answerInput.value = '';
+            feedbackDiv.className = 'feedback';
+            solutionContainer.className = 'solution-container';
+            
+            // Обновляем индикатор сложности
+            updateDifficultyIndicator();
         } else {
             // Если вопросы для текущего уровня закончились
             if (currentDifficulty < 3) {
@@ -236,70 +486,123 @@
                 questionIndices[currentDifficulty] = 0;
                 showQuestion();
             } else {
-                questionContainer.innerHTML = '<p>Поздравляем! Вы ответили на все вопросы!</p>';
-                document.getElementById('answer').style.display = 'none';
-                document.querySelector('button').style.display = 'none';
-                document.querySelector('.solution-button').style.display = 'none';
+                // Все вопросы пройдены
+                questionText.textContent = 'Поздравляем! Вы ответили на все вопросы!';
+                answerInput.style.display = 'none';
+                submitBtn.style.display = 'none';
+                solutionBtn.style.display = 'none';
+                feedbackDiv.textContent = `Ваш итоговый счет: ${score} из ${totalQuestions}`;
+                feedbackDiv.className = 'feedback show correct';
             }
         }
     }
 
+    // Проверить ответ
     function checkAnswer() {
-        const userAnswer = document.getElementById('answer').value.trim();
+        const userAnswer = answerInput.value.trim();
         const questionsForLevel = shuffledQuestions[currentDifficulty];
         const currentQuestion = questionsForLevel[questionIndices[currentDifficulty]];
         
         if (!currentQuestion) {
-            alert('Вопрос не найден!');
+            showFeedback('Вопрос не найден!', false);
             return;
         }
 
         if (userAnswer.toLowerCase() === currentQuestion.answer.toLowerCase()) {
-            alert('Правильно!');
-            questionIndices[currentDifficulty]++;
+            score++;
+            showFeedback('Правильно! 👍', true);
             
             // Переходим к следующему вопросу или увеличиваем сложность
+            questionIndices[currentDifficulty]++;
+            
             if (questionIndices[currentDifficulty] >= shuffledQuestions[currentDifficulty].length && currentDifficulty < 3) {
                 currentDifficulty++;
                 questionIndices[currentDifficulty] = 0;
-                alert(`Переход на уровень сложности ${currentDifficulty}`);
+                setTimeout(() => {
+                    showFeedback(`Переход на уровень сложности ${currentDifficulty}`, true);
+                }, 1500);
             }
         } else {
-            alert(`Неправильно. Правильный ответ: ${currentQuestion.answer}`);
-        }
+            showFeedback(`Неправильно. Правильный ответ: ${currentQuestion.answer}`, false);
+            }
         
-        document.getElementById('answer').value = '';
-        showQuestion();
+        // Обновляем счет и прогресс
+        updateScore();
+        updateProgress();
+        updateQuestionCounter();
+        
+        // Показываем следующий вопрос с задержкой
+        setTimeout(showQuestion, 2000);
     }
 
-    function goToMainPage() {
-        window.location.href = '../index.html';
-    }
-
+    // Показать решение
     function showSolution() {
         const questionsForLevel = shuffledQuestions[currentDifficulty];
         const currentQuestion = questionsForLevel[questionIndices[currentDifficulty]];
         
         if (currentQuestion) {
-            alert(`Решение: ${currentQuestion.detailedSolution}`);
-        } else {
-            alert('Решение недоступно.');
+            solutionText.textContent = currentQuestion.detailedSolution;
+            solutionContainer.className = 'solution-container show';
         }
     }
 
+    // Показать обратную связь
+    function showFeedback(message, isCorrect) {
+        feedbackDiv.textContent = message;
+        feedbackDiv.className = `feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
+    }
+
+    // Обновить индикатор сложности
+    function updateDifficultyIndicator() {
+        difficultyLevels.forEach((level, index) => {
+            if (index + 1 === currentDifficulty) {
+                level.classList.add('level-active');
+            } else {
+                level.classList.remove('level-active');
+            }
+        });
+    }
+
+    // Обновить счет
+    function updateScore() {
+        scoreSpan.textContent = `Счет: ${score}`;
+    }
+
+    // Обновить прогресс
+    function updateProgress() {
+        const answered = Object.values(questionIndices).reduce((a, b) => a + b, 0);
+        const progress = (answered / totalQuestions) * 100;
+        progressBar.style.width = `${progress}%`;
+    }
+
+    // Обновить счетчик вопросов
+    function updateQuestionCounter() {
+        const answered = Object.values(questionIndices).reduce((a, b) => a + b, 0);
+        questionCounter.textContent = `Вопрос ${answered + 1} из ${totalQuestions}`;
+    }
+
+    // Перейти на главную страницу
+    function goToMainPage() {
+        window.location.href = '../index.html';
+    }
+
+    // Обработчики событий
+    submitBtn.addEventListener('click', checkAnswer);
+    solutionBtn.addEventListener('click', showSolution);
+    homeBtn.addEventListener('click', goToMainPage);
+    
+    // Обработчик нажатия Enter в поле ввода
+    answerInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            checkAnswer();
+        }
+    });
+
     // Инициализация при загрузке страницы
-    window.onload = function() {
+    window.addEventListener('DOMContentLoaded', function() {
         initializeQuestions();
         showQuestion();
-    };
-</script>
-
-<div id="question-container"></div>
-<input type="text" id="answer" placeholder="Ваш ответ">
-<div class="button-container">
-    <button onclick="checkAnswer()">Ответить</button>
-    <button onclick="goToMainPage()">Назад на главную</button>
-    <button class="solution-button" onclick="showSolution()">Показать решение</button>
-</div>
+    });
+    </script>
 </body>
 </html>
