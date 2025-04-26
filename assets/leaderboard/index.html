@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Таблица лидеров</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #6c5ce7;
@@ -12,39 +13,62 @@
             --accent: #fd79a8;
             --dark: #2d3436;
             --light: #f5f6fa;
+            --success: #00b894;
+            --danger: #e74c3c;
+            --warning: #fdcb6e;
             --transition: all 0.3s ease-in-out;
+            --glow: 0 0 15px rgba(253, 121, 168, 0.5);
         }
 
         body {
             font-family: 'Montserrat', sans-serif;
             margin: 0;
-            padding: 0;
+            padding: 20px;
             background: linear-gradient(135deg, var(--dark), #000);
             color: var(--light);
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             min-height: 100vh;
-            overflow: hidden;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            animation: fadeIn 0.8s ease-out;
         }
 
         h2, h3 {
             text-align: center;
             color: var(--accent);
             margin-bottom: 20px;
-            text-shadow: 0 0 10px rgba(253, 121, 168, 0.5);
+            text-shadow: var(--glow);
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            margin: 10px auto;
+            border-radius: 3px;
         }
 
         table {
-            width: 90%;
-            max-width: 800px;
+            width: 100%;
             margin: 20px auto;
             border-collapse: collapse;
             background-color: rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         th, td {
@@ -54,131 +78,296 @@
         }
 
         th {
-            background-color: var(--primary);
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
             color: white;
             font-weight: bold;
             text-transform: uppercase;
+            letter-spacing: 1px;
+            position: sticky;
+            top: 0;
         }
 
         tbody tr {
             transition: var(--transition);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         tbody tr:nth-child(even) {
-            background-color: rgba(255, 255, 255, 0.05);
+            background-color: rgba(255, 255, 255, 0.03);
         }
 
         tbody tr:hover {
             background-color: rgba(108, 92, 231, 0.2);
+            transform: scale(1.01);
+        }
+
+        .medal {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .gold {
+            color: gold;
+        }
+
+        .silver {
+            color: silver;
+        }
+
+        .bronze {
+            color: #cd7f32;
         }
 
         .add-entry-form {
-            margin: 20px auto;
-            width: 90%;
+            margin: 30px auto;
+            width: 100%;
             max-width: 600px;
             text-align: center;
-            padding: 20px;
+            padding: 25px;
             background-color: rgba(255, 255, 255, 0.1);
             border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: slideUp 0.6s ease-out;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
         }
 
         label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             color: var(--light);
             font-weight: bold;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         input[type="text"], input[type="number"] {
-            width: 80%;
-            padding: 10px;
-            margin: 8px 0;
-            border-radius: 6px;
+            width: 100%;
+            padding: 12px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
             border: 1px solid var(--secondary);
             background: rgba(255, 255, 255, 0.1);
             color: var(--light);
             transition: var(--transition);
+            font-size: 16px;
         }
 
         input[type="text"]:focus, input[type="number"]:focus {
             border-color: var(--accent);
             outline: none;
+            box-shadow: 0 0 0 2px rgba(253, 121, 168, 0.3);
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
         }
 
         button {
             background: linear-gradient(45deg, var(--primary), var(--secondary));
             color: white;
-            padding: 12px 24px;
+            padding: 14px 28px;
             border: none;
             cursor: pointer;
             border-radius: 8px;
             transition: var(--transition);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 16px;
+            margin-top: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         button:hover {
             background: linear-gradient(45deg, var(--secondary), var(--primary));
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(108, 92, 231, 0.6);
+        }
+
+        button:active {
+            transform: translateY(1px);
         }
 
         .button {
-            margin-top: 20px;
+            margin: 20px 0;
             text-decoration: none;
             display: inline-block;
-            font-size: 18px;
+            font-size: 16px;
             text-align: center;
             background: linear-gradient(45deg, var(--primary), var(--secondary));
             color: white;
-            padding: 12px 24px;
+            padding: 14px 28px;
             border-radius: 8px;
             transition: var(--transition);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .button:hover {
             background: linear-gradient(45deg, var(--secondary), var(--primary));
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(108, 92, 231, 0.6);
         }
 
         .delete-button {
-            background-color: #e74c3c;
+            background: var(--danger);
             color: white;
-            padding: 8px 12px;
+            padding: 8px 16px;
             border: none;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 6px;
             transition: var(--transition);
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .delete-button:hover {
-            background-color: #c0392b;
-            transform: translateY(-1px);
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(231, 76, 60, 0.4);
         }
 
-        @media (max-width: 768px) {
-            table {
-                width: 100%;
-            }
+        .podium {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            margin: 30px 0;
+            gap: 20px;
+            height: 200px;
+        }
 
-            th, td {
-                padding: 12px;
-                font-size: 0.9em;
-            }
+        .podium-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            width: 120px;
+            position: relative;
+            border-radius: 8px 8px 0 0;
+            padding: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
 
-            .add-entry-form {
-                width: 100%;
-                padding: 15px;
-            }
+        .podium-1 {
+            height: 180px;
+            background: linear-gradient(to bottom, gold, #ffd700);
+        }
 
-            input[type="text"], input[type="number"] {
-                width: 90%;
-            }
+        .podium-2 {
+            height: 140px;
+            background: linear-gradient(to bottom, silver, #c0c0c0);
+        }
 
-            button {
-                font-size: 16px;
-                padding: 10px 20px;
-            }
+        .podium-3 {
+            height: 100px;
+            background: linear-gradient(to bottom, #cd7f32, #b87333);
+        }
+
+        .podium-name {
+            font-weight: bold;
+            margin-top: 10px;
+            color: var(--dark);
+            text-align: center;
+        }
+
+        .podium-score {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--dark);
+        }
+
+        .podium-place {
+            position: absolute;
+            top: -25px;
+            font-size: 20px;
+            font-weight: bold;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .podium-1 .podium-place {
+            background: gold;
+            color: var(--dark);
+        }
+
+        .podium-2 .podium-place {
+            background: silver;
+            color: var(--dark);
+        }
+
+        .podium-3 .podium-place {
+            background: #cd7f32;
+            color: white;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent);
+            opacity: 0;
+            z-index: 9999;
+            animation: confetti-fall 5s linear forwards;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: var(--success);
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transform: translateX(150%);
+            transition: transform 0.3s ease-out;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.error {
+            background: var(--danger);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .empty-state i {
+            font-size: 50px;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.2);
         }
 
         #background-video {
@@ -189,7 +378,90 @@
             height: 100%;
             z-index: -1;
             object-fit: cover;
-            opacity: 0.3;
+            opacity: 0.2;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+            th, td {
+                padding: 12px 8px;
+            }
+
+            .podium {
+                flex-direction: column;
+                align-items: center;
+                height: auto;
+                gap: 10px;
+            }
+
+            .podium-step {
+                width: 80%;
+                height: 80px !important;
+                flex-direction: row;
+                justify-content: space-around;
+                border-radius: 8px;
+                padding: 10px;
+            }
+
+            .podium-1 {
+                order: 1;
+            }
+
+            .podium-2 {
+                order: 2;
+            }
+
+            .podium-3 {
+                order: 3;
+            }
+
+            .podium-place {
+                position: static;
+                margin-right: 10px;
+            }
+
+            .add-entry-form {
+                padding: 15px;
+            }
+
+            button, .button {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
@@ -199,92 +471,296 @@
         Ваш браузер не поддерживает видео.
     </video>
 
-    <h2>Таблица Лидеров</h2>
+    <div class="container">
+        <h2><i class="fas fa-trophy"></i> Таблица Лидеров</h2>
 
-    <table id="leaderboard">
-        <thead>
-        <tr>
-            <th>Место</th>
-            <th>Имя</th>
-            <th>Правильные ответы</th>
-            <th>Действия</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!-- Здесь будут динамически добавляться строки -->
-        </tbody>
-    </table>
+        <div id="podium-container" class="podium"></div>
 
-    <h3>Добавить свой результат</h3>
-    <div class="add-entry-form">
-        <label for="name">Имя:</label>
-        <input type="text" id="name" placeholder="Ваш псевдоним">
-        <label for="score">Правильные ответы:</label>
-        <input type="number" id="score" placeholder="Количество правильных ответов">
-        <button onclick="addEntry()">Добавить</button>
+        <table id="leaderboard">
+            <thead>
+                <tr>
+                    <th>Место</th>
+                    <th>Имя</th>
+                    <th>Правильные ответы</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Здесь будут динамически добавляться строки -->
+            </tbody>
+        </table>
+
+        <h3><i class="fas fa-plus-circle"></i> Добавить свой результат</h3>
+        <div class="add-entry-form">
+            <div class="form-group">
+                <label for="name"><i class="fas fa-user"></i> Имя:</label>
+                <input type="text" id="name" placeholder="Ваш псевдоним" maxlength="20">
+            </div>
+            <div class="form-group">
+                <label for="score"><i class="fas fa-check-circle"></i> Правильные ответы:</label>
+                <input type="number" id="score" placeholder="Количество правильных ответов" min="0" max="1000">
+            </div>
+            <button onclick="addEntry()"><i class="fas fa-plus"></i> Добавить</button>
+        </div>
+
+        <a href="../../index.html" class="button"><i class="fas fa-arrow-left"></i> Назад на главную</a>
     </div>
 
-    <a href="../../index.html" class="button">Назад на главную</a>
+    <div id="toast" class="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message">Запись успешно добавлена!</span>
+    </div>
 
     <script>
         // Функции для работы с таблицей лидеров
         function getLeaderboardData() {
-            const data = localStorage.getItem('leaderboard');
-            return data ? JSON.parse(data) : [];
+            try {
+                const data = localStorage.getItem('leaderboard');
+                if (data) {
+                    return JSON.parse(data);
+                } else {
+                    // Если данных нет, создаем тестовые данные для демонстрации
+                    const demoData = [
+                        { name: "Алексей", score: 95 },
+                        { name: "Мария", score: 87 },
+                        { name: "Иван", score: 76 },
+                        { name: "Ольга", score: 65 },
+                        { name: "Дмитрий", score: 54 }
+                    ];
+                    localStorage.setItem('leaderboard', JSON.stringify(demoData));
+                    return demoData;
+                }
+            } catch (e) {
+                console.error("Ошибка при чтении из localStorage:", e);
+                return [];
+            }
         }
 
         function saveLeaderboardData(data) {
-            localStorage.setItem('leaderboard', JSON.stringify(data));
+            try {
+                localStorage.setItem('leaderboard', JSON.stringify(data));
+                return true;
+            } catch (e) {
+                console.error("Ошибка при записи в localStorage:", e);
+                showToast("Не удалось сохранить данные", true);
+                return false;
+            }
+        }
+
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastMessage.textContent = message;
+            toast.className = 'toast'; // Сбрасываем классы
+            if (isError) toast.classList.add('error');
+            
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function createConfetti() {
+            const colors = ['#6c5ce7', '#fd79a8', '#00b894', '#fdcb6e', '#e84393'];
+            const container = document.body;
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+
+        function displayPodium() {
+            const leaderboardData = getLeaderboardData();
+            const podiumContainer = document.getElementById('podium-container');
+            podiumContainer.innerHTML = '';
+            
+            if (leaderboardData.length === 0) return;
+            
+            const sortedData = [...leaderboardData].sort((a, b) => b.score - a.score);
+            const top3 = sortedData.slice(0, 3);
+            
+            if (top3.length >= 1) {
+                const firstPlace = document.createElement('div');
+                firstPlace.className = 'podium-step podium-1';
+                firstPlace.innerHTML = `
+                    <div class="podium-place">1</div>
+                    <div class="podium-score">${top3[0].score}</div>
+                    <div class="podium-name">${top3[0].name}</div>
+                `;
+                podiumContainer.appendChild(firstPlace);
+            }
+            
+            if (top3.length >= 2) {
+                const secondPlace = document.createElement('div');
+                secondPlace.className = 'podium-step podium-2';
+                secondPlace.innerHTML = `
+                    <div class="podium-place">2</div>
+                    <div class="podium-score">${top3[1].score}</div>
+                    <div class="podium-name">${top3[1].name}</div>
+                `;
+                podiumContainer.appendChild(secondPlace);
+            }
+            
+            if (top3.length >= 3) {
+                const thirdPlace = document.createElement('div');
+                thirdPlace.className = 'podium-step podium-3';
+                thirdPlace.innerHTML = `
+                    <div class="podium-place">3</div>
+                    <div class="podium-score">${top3[2].score}</div>
+                    <div class="podium-name">${top3[2].name}</div>
+                `;
+                podiumContainer.appendChild(thirdPlace);
+            }
         }
 
         function displayLeaderboard() {
-            const leaderboardData = getLeaderboardData();
-            const tableBody = document.querySelector('#leaderboard tbody');
-            tableBody.innerHTML = '';
+            try {
+                const leaderboardData = getLeaderboardData();
+                const tableBody = document.querySelector('#leaderboard tbody');
+                tableBody.innerHTML = '';
+                
+                if (leaderboardData.length === 0) {
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="4" class="empty-state">
+                                <i class="fas fa-users"></i>
+                                <h3>Таблица лидеров пуста</h3>
+                                <p>Будьте первым, кто добавит свой результат!</p>
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
 
-            leaderboardData.sort((a, b) => b.score - a.score);
+                const sortedData = [...leaderboardData].sort((a, b) => b.score - a.score);
 
-            for (let i = 0; i < leaderboardData.length; i++) {
-                const entry = leaderboardData[i];
-                const row = `<tr>
-                                <td>${i + 1}</td>
-                                <td>${entry.name}</td>
-                                <td>${entry.score}</td>
-                                <td>
-                                    <button class="delete-button" onclick="deleteEntry(${i})">Удалить</button>
-                                </td>
-                            </tr>`;
-                tableBody.innerHTML += row;
+                for (let i = 0; i < sortedData.length; i++) {
+                    const entry = sortedData[i];
+                    let medalIcon = '';
+                    
+                    if (i === 0) medalIcon = '<i class="fas fa-medal gold"></i>';
+                    else if (i === 1) medalIcon = '<i class="fas fa-medal silver"></i>';
+                    else if (i === 2) medalIcon = '<i class="fas fa-medal bronze"></i>';
+                    
+                    const row = `<tr>
+                                    <td>${medalIcon} ${i + 1}</td>
+                                    <td>${entry.name}</td>
+                                    <td>${entry.score}</td>
+                                    <td>
+                                        <button class="delete-button" onclick="deleteEntry('${entry.name}', ${entry.score})">
+                                            <i class="fas fa-trash"></i> Удалить
+                                        </button>
+                                    </td>
+                                </tr>`;
+                    tableBody.innerHTML += row;
+                }
+                
+                displayPodium();
+            } catch (e) {
+                console.error("Ошибка при отображении таблицы:", e);
+                showToast("Ошибка при загрузке таблицы", true);
             }
         }
 
         function addEntry() {
-            const nameInput = document.getElementById('name');
-            const scoreInput = document.getElementById('score');
-            const name = nameInput.value;
-            const score = parseInt(scoreInput.value);
+            try {
+                const nameInput = document.getElementById('name');
+                const scoreInput = document.getElementById('score');
+                const name = nameInput.value.trim();
+                const score = parseInt(scoreInput.value);
 
-            if (name && !isNaN(score)) {
+                // Валидация
+                if (!name || name.length < 2) {
+                    showToast('Введите имя (минимум 2 символа)', true);
+                    nameInput.focus();
+                    return;
+                }
+
+                if (isNaN(score)) {
+                    showToast('Введите число правильных ответов', true);
+                    scoreInput.focus();
+                    return;
+                }
+
                 const leaderboardData = getLeaderboardData();
-                leaderboardData.push({ name: name, score: score });
-                saveLeaderboardData(leaderboardData);
-                displayLeaderboard();
-
-                nameInput.value = '';
-                scoreInput.value = '';
-            } else {
-                alert('Пожалуйста, введите имя и количество правильных ответов.');
+                leaderboardData.push({ name, score });
+                
+                if (saveLeaderboardData(leaderboardData)) {
+                    displayLeaderboard();
+                    showToast('Результат добавлен!');
+                    nameInput.value = '';
+                    scoreInput.value = '';
+                    
+                    // Проверяем, попал ли пользователь в топ-3
+                    const sortedData = [...leaderboardData].sort((a, b) => b.score - a.score);
+                    const isTop3 = sortedData.slice(0, 3).some(entry => entry.name === name && entry.score === score);
+                    
+                    if (isTop3) {
+                        createConfetti();
+                    }
+                }
+            } catch (e) {
+                console.error("Ошибка при добавлении:", e);
+                showToast("Ошибка при добавлении", true);
             }
         }
 
-        function deleteEntry(index) {
-            const leaderboardData = getLeaderboardData();
-            leaderboardData.splice(index, 1);
-            saveLeaderboardData(leaderboardData);
-            displayLeaderboard();
+        function deleteEntry(name, score) {
+            try {
+                if (confirm(`Удалить "${name}" с результатом ${score}?`)) {
+                    const leaderboardData = getLeaderboardData();
+                    const updatedData = leaderboardData.filter(entry => 
+                        !(entry.name === name && entry.score === score)
+                    );
+                    
+                    if (saveLeaderboardData(updatedData)) {
+                        displayLeaderboard();
+                        showToast('Запись удалена');
+                    }
+                }
+            } catch (e) {
+                console.error("Ошибка при удалении:", e);
+                showToast("Ошибка при удалении", true);
+            }
         }
 
-        displayLeaderboard();
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Проверяем доступность localStorage
+            try {
+                localStorage.setItem('test', 'test');
+                localStorage.removeItem('test');
+            } catch (e) {
+                console.error("localStorage недоступен:", e);
+                showToast("Ваш браузер не поддерживает сохранение результатов", true);
+                document.querySelector('button').disabled = true;
+            }
+            
+            displayLeaderboard();
+            
+            // Обработчики Enter
+            document.getElementById('name').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') document.getElementById('score').focus();
+            });
+            
+            document.getElementById('score').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') addEntry();
+            });
+        });
     </script>
 </body>
 </html>
