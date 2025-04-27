@@ -5,17 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Проект по математике: Неравенства</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         :root {
-            --primary: #6c5ce7; /* Основной цвет */
-            --secondary: #a29bfe; /* Второстепенный цвет */
-            --accent: #fd79a8; /* Акцентный цвет */
-            --dark: #2d3436; /* Темный фон */
-            --light: #f5f6fa; /* Светлый текст */
-            --success: #00b894; /* Цвет успеха */
-            --danger: #d63031; /* Цвет ошибки */
-            --warning: #fdcb6e; /* Цвет предупреждения */
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Анимация переходов */
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+            --success: #00b894;
+            --danger: #d63031;
+            --warning: #fdcb6e;
+            --info: #0984e3;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         * {
@@ -30,25 +34,39 @@
             background: linear-gradient(135deg, var(--dark), #000);
             min-height: 100vh;
             padding: 20px;
+            line-height: 1.6;
         }
 
         .content-container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 30px auto;
-            padding: 30px;
-            background-color: rgba(45, 52, 54, 0.85);
+            padding: 40px;
+            background-color: rgba(45, 52, 54, 0.9);
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             position: relative;
             overflow: hidden;
             transition: var(--transition);
+            z-index: 1;
+        }
+
+        .content-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(108, 92, 231, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 70%, rgba(253, 121, 168, 0.1) 0%, transparent 50%);
+            z-index: -1;
         }
 
         .content-container:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
         }
 
         h1 {
@@ -56,12 +74,18 @@
             text-align: center;
             margin-bottom: 30px;
             color: var(--accent);
-            text-shadow: 0 0 10px rgba(253, 121, 168, 0.5);
-            font-size: 2.5rem;
-            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(253, 121, 168, 0.7);
+            font-size: 2.8rem;
+            letter-spacing: 3px;
             position: relative;
             display: inline-block;
             width: 100%;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(253, 121, 168, 0.7); }
+            to { text-shadow: 0 0 20px rgba(253, 121, 168, 0.9), 0 0 30px rgba(253, 121, 168, 0.5); }
         }
 
         h1::after {
@@ -70,51 +94,96 @@
             bottom: -10px;
             left: 50%;
             transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
+            width: 150px;
+            height: 4px;
             background: linear-gradient(90deg, var(--primary), var(--accent));
-            border-radius: 3px;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(253, 121, 168, 0.5);
         }
 
         h2 {
             color: var(--secondary);
-            margin: 25px 0 15px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid rgba(162, 155, 254, 0.3);
+            margin: 30px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(162, 155, 254, 0.4);
             font-family: 'Orbitron', sans-serif;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            font-size: 1.8rem;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--secondary), transparent);
         }
 
         h3 {
             color: var(--warning);
-            margin: 20px 0 10px;
-            font-size: 1.2rem;
+            margin: 25px 0 15px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+        }
+
+        h3 i {
+            margin-right: 10px;
+            color: var(--accent);
         }
 
         .nav {
-            background-color: rgba(108, 92, 231, 0.1);
-            padding: 20px;
+            background-color: rgba(108, 92, 231, 0.15);
+            padding: 25px;
             border-radius: 15px;
-            margin: 25px 0;
-            border: 1px solid rgba(162, 155, 254, 0.2);
+            margin: 30px 0;
+            border: 1px solid rgba(162, 155, 254, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+            pointer-events: none;
+        }
+
+        .nav h2 {
+            margin-top: 0;
         }
 
         .nav ul {
             list-style-type: none;
             columns: 2;
+            gap: 20px;
         }
 
         .nav li {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             position: relative;
-            padding-left: 15px;
+            padding-left: 25px;
+            transition: var(--transition);
+        }
+
+        .nav li:hover {
+            transform: translateX(5px);
         }
 
         .nav li::before {
-            content: '→';
+            content: '▹';
             position: absolute;
             left: 0;
             color: var(--accent);
+            font-size: 1.2rem;
         }
 
         .nav a {
@@ -123,41 +192,52 @@
             font-weight: 600;
             transition: var(--transition);
             display: inline-block;
+            padding: 5px 0;
         }
 
         .nav a:hover {
             color: var(--accent);
-            transform: translateX(5px);
+            text-shadow: 0 0 10px rgba(253, 121, 168, 0.5);
+        }
+
+        .definition, .example, .important, .theorem {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-left: 5px solid;
+            transition: var(--transition);
+        }
+
+        .definition:hover, .example:hover, .important:hover, .theorem:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
 
         .definition {
+            border-left-color: var(--primary);
             background-color: rgba(108, 92, 231, 0.1);
-            border-left: 4px solid var(--primary);
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 0 10px 10px 0;
-            position: relative;
-            overflow: hidden;
         }
 
         .definition::before {
-            content: '';
+            content: 'Определение';
             position: absolute;
             top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-            pointer-events: none;
+            right: 0;
+            background-color: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            font-size: 0.9rem;
+            border-radius: 0 0 0 10px;
+            font-weight: bold;
         }
 
         .example {
+            border-left-color: var(--accent);
             background-color: rgba(253, 121, 168, 0.1);
-            border-left: 4px solid var(--accent);
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 0 10px 10px 0;
-            position: relative;
         }
 
         .example::before {
@@ -167,45 +247,92 @@
             right: 0;
             background-color: var(--accent);
             color: white;
-            padding: 3px 10px;
-            font-size: 0.8rem;
-            border-radius: 0 0 0 5px;
+            padding: 5px 15px;
+            font-size: 0.9rem;
+            border-radius: 0 0 0 10px;
+            font-weight: bold;
+        }
+
+        .important {
+            border-left-color: var(--danger);
+            background-color: rgba(214, 48, 49, 0.1);
+        }
+
+        .important::before {
+            content: 'Важно!';
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: var(--danger);
+            color: white;
+            padding: 5px 15px;
+            font-size: 0.9rem;
+            border-radius: 0 0 0 10px;
+            font-weight: bold;
+        }
+
+        .theorem {
+            border-left-color: var(--success);
+            background-color: rgba(0, 184, 148, 0.1);
+        }
+
+        .theorem::before {
+            content: 'Теорема';
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: var(--success);
+            color: white;
+            padding: 5px 15px;
+            font-size: 0.9rem;
+            border-radius: 0 0 0 10px;
+            font-weight: bold;
         }
 
         .solution {
             font-style: italic;
             color: var(--success);
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px dashed rgba(0, 184, 148, 0.3);
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed rgba(0, 184, 148, 0.4);
+            position: relative;
         }
 
-        .important {
-            background-color: rgba(214, 48, 49, 0.1);
-            border-left: 4px solid var(--danger);
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 0 10px 10px 0;
+        .solution::before {
+            content: 'Решение:';
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: var(--warning);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
-            background-color: rgba(255, 255, 255, 0.05);
+            margin: 25px 0;
+            background-color: rgba(255, 255, 255, 0.07);
             border-radius: 10px;
             overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+        }
+
+        table:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
 
         th {
             background: linear-gradient(45deg, var(--primary), var(--secondary));
             color: white;
-            padding: 12px;
+            padding: 15px;
             text-align: left;
+            font-weight: 600;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         td {
-            padding: 10px 12px;
+            padding: 12px 15px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -218,45 +345,71 @@
         }
 
         tr:hover {
-            background-color: rgba(108, 92, 231, 0.1);
+            background-color: rgba(108, 92, 231, 0.15);
         }
 
         .math-expr {
             font-family: 'Times New Roman', serif;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: var(--warning);
-            background-color: rgba(0, 0, 0, 0.3);
-            padding: 5px 10px;
-            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 8px 15px;
+            border-radius: 8px;
             display: inline-block;
-            margin: 5px 0;
+            margin: 8px 0;
+            border: 1px solid rgba(253, 203, 110, 0.3);
+            transition: var(--transition);
+        }
+
+        .math-expr:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 15px rgba(253, 203, 110, 0.3);
         }
 
         .footer {
             text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.9em;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 1em;
             color: var(--secondary);
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--secondary), transparent);
         }
 
         .back-button {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 25px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 25px;
+            padding: 15px 30px;
             background: linear-gradient(45deg, var(--primary), var(--secondary));
             color: white;
             text-decoration: none;
             border-radius: 50px;
             transition: var(--transition);
             font-weight: bold;
-            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+            box-shadow: 0 5px 20px rgba(108, 92, 231, 0.5);
             border: none;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 1.1rem;
             position: relative;
             overflow: hidden;
+            gap: 10px;
+        }
+
+        .back-button i {
+            transition: var(--transition);
         }
 
         .back-button::before {
@@ -266,13 +419,17 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.7s;
         }
 
         .back-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.6);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(108, 92, 231, 0.7);
+        }
+
+        .back-button:hover i {
+            transform: translateX(-5px);
         }
 
         .back-button:hover::before {
@@ -281,17 +438,26 @@
 
         /* Анимации */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         section {
-            animation: fadeIn 0.5s ease-out forwards;
+            animation: fadeIn 0.7s ease-out forwards;
+            opacity: 0;
         }
+
+        section:nth-child(1) { animation-delay: 0.1s; }
+        section:nth-child(2) { animation-delay: 0.2s; }
+        section:nth-child(3) { animation-delay: 0.3s; }
+        section:nth-child(4) { animation-delay: 0.4s; }
+        section:nth-child(5) { animation-delay: 0.5s; }
+        section:nth-child(6) { animation-delay: 0.6s; }
+        section:nth-child(7) { animation-delay: 0.7s; }
 
         @keyframes pulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
+            50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
 
@@ -299,16 +465,133 @@
             animation: pulse 1s infinite;
         }
 
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Интерактивные элементы */
+        .interactive-element {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .hidden-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 0 0 10px 10px;
+            margin-top: -10px;
+        }
+
+        .expand-button {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 10px 15px;
+            border-radius: 5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin: 10px 0;
+        }
+
+        .expand-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .expand-button i {
+            transition: transform 0.3s ease;
+        }
+
+        .expanded i {
+            transform: rotate(90deg);
+        }
+
+        /* Квиз */
+        .quiz {
+            background-color: rgba(9, 132, 227, 0.1);
+            border-left: 5px solid var(--info);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 10px 10px 0;
+            position: relative;
+        }
+
+        .quiz::before {
+            content: 'Проверь себя';
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: var(--info);
+            color: white;
+            padding: 5px 15px;
+            font-size: 0.9rem;
+            border-radius: 0 0 0 10px;
+            font-weight: bold;
+        }
+
+        .quiz-question {
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .quiz-options {
+            list-style-type: none;
+        }
+
+        .quiz-option {
+            padding: 10px 15px;
+            margin: 5px 0;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .quiz-option:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .quiz-option.correct {
+            background-color: rgba(0, 184, 148, 0.2);
+            border-left: 3px solid var(--success);
+        }
+
+        .quiz-option.incorrect {
+            background-color: rgba(214, 48, 49, 0.2);
+            border-left: 3px solid var(--danger);
+        }
+
+        .quiz-feedback {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-left: 3px solid var(--info);
+        }
+
+        .quiz-feedback.show {
+            display: block;
+        }
+
         /* Адаптивность */
         @media (max-width: 768px) {
             .content-container {
-                padding: 20px;
-                margin: 20px;
+                padding: 25px;
+                margin: 20px 10px;
                 transform: none !important;
             }
 
             h1 {
-                font-size: 1.8rem;
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
             }
 
             .nav ul {
@@ -321,40 +604,129 @@
             }
         }
 
-        .background-video {
+        /* Фоновые элементы */
+        .floating-math {
+            position: fixed;
+            color: rgba(255, 255, 255, 0.05);
+            font-size: 5rem;
+            z-index: -1;
+            user-select: none;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .floating-math:nth-child(1) {
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .floating-math:nth-child(2) {
+            top: 30%;
+            right: 10%;
+            animation-delay: 2s;
+            animation-duration: 12s;
+        }
+
+        .floating-math:nth-child(3) {
+            bottom: 20%;
+            left: 15%;
+            animation-delay: 4s;
+            animation-duration: 18s;
+        }
+
+        .floating-math:nth-child(4) {
+            bottom: 40%;
+            right: 20%;
+            animation-delay: 1s;
+            animation-duration: 14s;
+        }
+
+        /* Прогресс бар */
+        .progress-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+        }
+
+        .progress-bar {
             height: 100%;
-            object-fit: cover;
-            z-index: -1;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 0%;
+            transition: width 0.1s ease-out;
+        }
+
+        /* Кнопка вверх */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.5);
+            z-index: 999;
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-to-top:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.7);
         }
     </style>
 </head>
 <body>
-    <video autoplay loop muted playsinline class="background-video">
-        <source src="../assets/video/video.mp4" type="video/mp4">
-        Ваш браузер не поддерживает видео.
-    </video>
+    <!-- Фоновые математические символы -->
+    <div class="floating-math">∫</div>
+    <div class="floating-math">∑</div>
+    <div class="floating-math">∞</div>
+    <div class="floating-math">∂</div>
+
+    <!-- Прогресс бар чтения -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Кнопка вверх -->
+    <div class="scroll-to-top" id="scrollToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
     <div class="content-container">
-        <h1>Неравенства в математике</h1>
+        <h1><i class="fas fa-not-equal"></i> Неравенства в математике</h1>
         
         <div class="nav">
-            <h2>Оглавление</h2>
+            <h2><i class="fas fa-list-ol"></i> Оглавление</h2>
             <ul>
-                <li><a href="#intro">1. Введение в неравенства</a></li>
-                <li><a href="#types">2. Основные виды неравенств</a></li>
-                <li><a href="#properties">3. Свойства неравенств</a></li>
-                <li><a href="#methods">4. Методы решения неравенств</a></li>
-                <li><a href="#module">5. Неравенства с модулем</a></li>
-                <li><a href="#systems">6. Системы неравенств</a></li>
-                <li><a href="#application">7. Применение неравенств</a></li>
+                <li><a href="#intro"><i class="fas fa-star"></i> Введение в неравенства</a></li>
+                <li><a href="#types"><i class="fas fa-shapes"></i> Основные виды неравенств</a></li>
+                <li><a href="#properties"><i class="fas fa-cogs"></i> Свойства неравенств</a></li>
+                <li><a href="#methods"><i class="fas fa-tools"></i> Методы решения неравенств</a></li>
+                <li><a href="#module"><i class="fas fa-absolute-value"></i> Неравенства с модулем</a></li>
+                <li><a href="#systems"><i class="fas fa-layer-group"></i> Системы неравенств</a></li>
+                <li><a href="#application"><i class="fas fa-rocket"></i> Применение неравенств</a></li>
+                <li><a href="#quiz"><i class="fas fa-question-circle"></i> Проверь свои знания</a></li>
             </ul>
         </div>
         
         <section id="intro">
-            <h2>1. Введение в неравенства</h2>
+            <h2><i class="fas fa-star"></i> Введение в неравенства</h2>
             
             <div class="definition">
                 <p><strong>Неравенства</strong> - это математические выражения, содержащие знаки сравнения:</p>
@@ -365,6 +737,7 @@
                     <li>&le; (меньше или равно)</li>
                     <li>&ne; (не равно)</li>
                 </ul>
+                <p>Неравенства описывают соотношение между двумя величинами, указывая, что одна величина больше, меньше или не равна другой.</p>
             </div>
             
             <p>Неравенства, как и уравнения, могут содержать переменные, и их решение заключается в нахождении всех значений переменных, при которых неравенство становится верным.</p>
@@ -372,50 +745,71 @@
             <div class="example">
                 <p><strong>Пример простого неравенства:</strong></p>
                 <p class="math-expr">3x + 2 &gt; 8</p>
-                <p class="solution">Решение: 3x &gt; 6 ⇒ x &gt; 2</p>
+                <p class="solution">
+                    1. Вычитаем 2 из обеих частей: 3x &gt; 6<br>
+                    2. Делим обе части на 3: x &gt; 2<br>
+                    Ответ: \( x \in (2; +\infty) \)
+                </p>
+            </div>
+
+            <div class="expand-button" onclick="toggleContent('intro-more')">
+                <i class="fas fa-chevron-right"></i>
+                <span>Историческая справка</span>
+            </div>
+            <div class="hidden-content" id="intro-more">
+                <p>Понятие неравенства возникло еще в древности, когда люди начали сравнивать количества. Первые систематические исследования неравенств относятся к работам древнегреческих математиков. Евклид в своих "Началах" использовал неравенства для доказательства геометрических теорем.</p>
+                <p>Современная теория неравенств начала развиваться в XVII-XVIII веках благодаря работам таких математиков, как Пьер де Ферма, Исаак Ньютон и Леонард Эйлер.</p>
             </div>
         </section>
         
         <section id="types">
-            <h2>2. Основные виды неравенств</h2>
+            <h2><i class="fas fa-shapes"></i> Основные виды неравенств</h2>
             
-            <h3>2.1. Линейные неравенства</h3>
+            <h3><i class="fas fa-line-chart"></i> Линейные неравенства</h3>
             <p>Линейные неравенства имеют вид: <span class="math-expr">ax + b &gt; 0</span> (или другие знаки сравнения).</p>
             
             <div class="example">
                 <p><strong>Пример:</strong></p>
                 <p class="math-expr">2x - 5 &lt; 7</p>
-                <p class="solution">Решение:<br>
-                2x &lt; 12<br>
-                x &lt; 6</p>
+                <p class="solution">
+                    1. Прибавляем 5 к обеим частям: 2x &lt; 12<br>
+                    2. Делим обе части на 2: x &lt; 6<br>
+                    Ответ: \( x \in (-\infty; 6) \)
+                </p>
             </div>
             
-            <h3>2.2. Квадратные неравенства</h3>
+            <h3><i class="fas fa-chart-parabola"></i> Квадратные неравенства</h3>
             <p>Квадратные неравенства имеют вид: <span class="math-expr">ax² + bx + c &gt; 0</span>.</p>
             
             <div class="example">
                 <p><strong>Пример:</strong></p>
                 <p class="math-expr">x² - 5x + 6 &gt; 0</p>
-                <p class="solution">Решение:<br>
-                1. Находим корни: x₁=2, x₂=3<br>
-                2. Строим параболу (ветви вверх)<br>
-                3. Ответ: x ∈ (-∞; 2) ∪ (3; +∞)</p>
+                <p class="solution">
+                    1. Находим корни уравнения x² - 5x + 6 = 0: x₁=2, x₂=3<br>
+                    2. Строим параболу (ветви вверх)<br>
+                    3. Определяем интервалы, где парабола выше оси X<br>
+                    4. Ответ: \( x \in (-\infty; 2) \cup (3; +\infty) \)
+                </p>
             </div>
             
-            <h3>2.3. Дробно-рациональные неравенства</h3>
+            <h3><i class="fas fa-divide"></i> Дробно-рациональные неравенства</h3>
             <p>Дробно-рациональные неравенства имеют вид: <span class="math-expr">P(x)/Q(x) &gt; 0</span>.</p>
             
             <div class="example">
                 <p><strong>Пример:</strong></p>
                 <p class="math-expr">(x-1)/(x+2) ≤ 0</p>
-                <p class="solution">Решение методом интервалов:<br>
-                1. Критические точки: x = -2 (знаменатель), x = 1 (числитель)<br>
-                2. Ответ: x ∈ (-2; 1]</p>
+                <p class="solution">
+                    1. Находим критические точки: x = -2 (знаменатель), x = 1 (числитель)<br>
+                    2. Разбиваем числовую прямую на интервалы: (-∞;-2), (-2;1], (1;+∞)<br>
+                    3. Определяем знаки на каждом интервале<br>
+                    4. Учитываем, что x = -2 не входит в область определения<br>
+                    5. Ответ: \( x \in (-2; 1] \)
+                </p>
             </div>
         </section>
         
         <section id="properties">
-            <h2>3. Свойства неравенств</h2>
+            <h2><i class="fas fa-cogs"></i> Свойства неравенств</h2>
             
             <div class="important">
                 <p>Основные свойства неравенств:</p>
@@ -432,16 +826,25 @@
             <div class="example">
                 <p><strong>Пример применения свойств:</strong></p>
                 <p class="math-expr">-3x &gt; 12</p>
-                <p class="solution">Решение:<br>
-                Делим обе части на -3 (отрицательное число), поэтому знак меняется:<br>
-                x &lt; -4</p>
+                <p class="solution">
+                    Делим обе части на -3 (отрицательное число), поэтому знак неравенства меняется:<br>
+                    x &lt; -4<br>
+                    Ответ: \( x \in (-\infty; -4) \)
+                </p>
+            </div>
+
+            <div class="theorem">
+                <p><strong>Теорема о средних:</strong></p>
+                <p>Для любых положительных чисел \( a \) и \( b \) выполняется:</p>
+                <p class="math-expr">\[\frac{2ab}{a + b} \leq \sqrt{ab} \leq \frac{a + b}{2} \leq \sqrt{\frac{a^2 + b^2}{2}}\]</p>
+                <p>Это соотношение между гармоническим, геометрическим, арифметическим и квадратичным средними.</p>
             </div>
         </section>
         
         <section id="methods">
-            <h2>4. Методы решения неравенств</h2>
+            <h2><i class="fas fa-tools"></i> Методы решения неравенств</h2>
             
-            <h3>4.1. Метод интервалов</h3>
+            <h3><i class="fas fa-project-diagram"></i> Метод интервалов</h3>
             <p>Алгоритм метода интервалов:</p>
             <ol>
                 <li>Найти нули функции (точки, где выражение равно 0)</li>
@@ -453,14 +856,16 @@
             <div class="example">
                 <p><strong>Пример:</strong></p>
                 <p class="math-expr">(x-3)(x+1)(x-5) ≥ 0</p>
-                <p class="solution">Решение:<br>
-                1. Критические точки: x = -1, 3, 5<br>
-                2. Интервалы: (-∞;-1), (-1;3), (3;5), (5;+∞)<br>
-                3. Знаки: -, +, -, +<br>
-                4. Ответ: x ∈ [-1;3] ∪ [5;+∞)</p>
+                <p class="solution">
+                    1. Критические точки: x = -1, 3, 5<br>
+                    2. Разбиваем числовую прямую на интервалы: (-∞;-1), (-1;3), (3;5), (5;+∞)<br>
+                    3. Определяем знаки: -, +, -, +<br>
+                    4. Учитываем, что неравенство нестрогое (включаем точки, где выражение равно 0)<br>
+                    5. Ответ: \( x \in [-1;3] \cup [5;+\infty) \)
+                </p>
             </div>
             
-            <h3>4.2. Графический метод</h3>
+            <h3><i class="fas fa-chart-line"></i> Графический метод</h3>
             <p>Алгоритм графического метода:</p>
             <ol>
                 <li>Построить графики обеих частей неравенства</li>
@@ -468,22 +873,25 @@
                 <li>Выбрать интервалы, где выполняется неравенство</li>
             </ol>
             
-            <h3>4.3. Замена переменной</h3>
+            <h3><i class="fas fa-exchange-alt"></i> Замена переменной</h3>
             <div class="example">
                 <p><strong>Пример:</strong></p>
                 <p class="math-expr">3<sup>2x</sup> - 4·3<sup>x</sup> + 3 > 0</p>
-                <p class="solution">Решение:<br>
-                1. Замена: t = 3<sup>x</sup><br>
-                2. Получаем: t² - 4t + 3 > 0<br>
-                3. Решаем: t ∈ (-∞;1) ∪ (3;+∞)<br>
-                4. Возвращаемся к x: 3<sup>x</sup> < 1 ⇒ x < 0<br>
-                3<sup>x</sup> > 3 ⇒ x > 1<br>
-                5. Ответ: x ∈ (-∞;0) ∪ (1;+∞)</p>
+                <p class="solution">
+                    1. Замена переменной: \( t = 3^x \) (заметим, что \( t > 0 \))<br>
+                    2. Получаем квадратное неравенство: \( t^2 - 4t + 3 > 0 \)<br>
+                    3. Решаем неравенство: \( t \in (-\infty;1) \cup (3;+\infty) \)<br>
+                    4. Учитывая \( t > 0 \), получаем: \( t \in (0;1) \cup (3;+\infty) \)<br>
+                    5. Возвращаемся к исходной переменной:<br>
+                    - \( 3^x < 1 \Rightarrow x < 0 \)<br>
+                    - \( 3^x > 3 \Rightarrow x > 1 \)<br>
+                    6. Ответ: \( x \in (-\infty;0) \cup (1;+\infty) \)
+                </p>
             </div>
         </section>
         
         <section id="module">
-            <h2>5. Неравенства с модулем</h2>
+            <h2><i class="fas fa-absolute-value"></i> Неравенства с модулем</h2>
             
             <div class="definition">
                 <p>Основные типы неравенств с модулем:</p>
@@ -493,16 +901,20 @@
                         <th>Эквивалентная запись</th>
                     </tr>
                     <tr>
-                        <td>|f(x)| &lt; a, где a > 0</td>
-                        <td>-a &lt; f(x) &lt; a</td>
+                        <td>\( |f(x)| &lt; a \), где \( a > 0 \)</td>
+                        <td>\( -a &lt; f(x) &lt; a \)</td>
                     </tr>
                     <tr>
-                        <td>|f(x)| &gt; a, где a > 0</td>
-                        <td>f(x) &lt; -a или f(x) &gt; a</td>
+                        <td>\( |f(x)| &gt; a \), где \( a > 0 \)</td>
+                        <td>\( f(x) &lt; -a \) или \( f(x) &gt; a \)</td>
                     </tr>
                     <tr>
-                        <td>|f(x)| &lt; |g(x)|</td>
-                        <td>f²(x) &lt; g²(x)</td>
+                        <td>\( |f(x)| &lt; |g(x)| \)</td>
+                        <td>\( f^2(x) &lt; g^2(x) \)</td>
+                    </tr>
+                    <tr>
+                        <td>\( |f(x)| &gt; g(x) \)</td>
+                        <td>\( f(x) &lt; -g(x) \) или \( f(x) &gt; g(x) \) (при \( g(x) \geq 0 \))</td>
                     </tr>
                 </table>
             </div>
@@ -510,56 +922,236 @@
             <div class="example">
                 <p><strong>Пример:</strong></p>
                 <p class="math-expr">|2x - 3| ≤ 5</p>
-                <p class="solution">Решение:<br>
-                -5 ≤ 2x - 3 ≤ 5<br>
-                -2 ≤ 2x ≤ 8<br>
-                -1 ≤ x ≤ 4</p>
+                <p class="solution">
+                    1. Переписываем неравенство в виде: \( -5 \leq 2x - 3 \leq 5 \)<br>
+                    2. Решаем двойное неравенство:<br>
+                    - \( 2x - 3 \geq -5 \Rightarrow 2x \geq -2 \Rightarrow x \geq -1 \)<br>
+                    - \( 2x - 3 \leq 5 \Rightarrow 2x \leq 8 \Rightarrow x \leq 4 \)<br>
+                    3. Ответ: \( x \in [-1; 4] \)
+                </p>
+            </div>
+
+            <div class="expand-button" onclick="toggleContent('module-more')">
+                <i class="fas fa-chevron-right"></i>
+                <span>Дополнительные методы решения</span>
+            </div>
+            <div class="hidden-content" id="module-more">
+                <p>Для решения более сложных неравенств с модулем можно использовать:</p>
+                <ol>
+                    <li><strong>Метод интервалов</strong> - находят точки, где подмодульные выражения равны нулю, и рассматривают неравенство на каждом интервале отдельно.</li>
+                    <li><strong>Возведение в квадрат</strong> - если обе части неравенства неотрицательны, можно возвести обе части в квадрат.</li>
+                    <li><strong>Геометрическая интерпретация</strong> - модуль представляет расстояние на числовой прямой.</li>
+                </ol>
             </div>
         </section>
         
         <section id="systems">
-            <h2>6. Системы неравенств</h2>
+            <h2><i class="fas fa-layer-group"></i> Системы неравенств</h2>
             
             <p>Система неравенств решается путем решения каждого неравенства отдельно и нахождения пересечения всех решений.</p>
             
             <div class="example">
                 <p><strong>Пример:</strong></p>
                 <p class="math-expr">
-                { 3x - 2 > 4<br>
-                { 5 - x ≥ 1
+                \[ \begin{cases} 
+                3x - 2 > 4 \\
+                5 - x \geq 1 
+                \end{cases} \]
                 </p>
-                <p class="solution">Решение:<br>
-                1. 3x > 6 ⇒ x > 2<br>
-                2. -x ≥ -4 ⇒ x ≤ 4<br>
-                Ответ: x ∈ (2; 4]</p>
+                <p class="solution">
+                    1. Решаем первое неравенство:<br>
+                    \( 3x > 6 \Rightarrow x > 2 \)<br><br>
+                    2. Решаем второе неравенство:<br>
+                    \( -x \geq -4 \Rightarrow x \leq 4 \)<br><br>
+                    3. Находим пересечение решений:<br>
+                    \( x > 2 \) и \( x \leq 4 \) ⇒ \( x \in (2; 4] \)<br><br>
+                    Ответ: \( x \in (2; 4] \)
+                </p>
+            </div>
+
+            <div class="important">
+                <p>При решении систем неравенств важно:</p>
+                <ul>
+                    <li>Решать каждое неравенство системы отдельно</li>
+                    <li>Изображать решения на числовой прямой</li>
+                    <li>Находить пересечение всех решений</li>
+                    <li>Проверять крайние точки интервалов</li>
+                </ul>
             </div>
         </section>
         
         <section id="application">
-            <h2>7. Применение неравенств</h2>
+            <h2><i class="fas fa-rocket"></i> Применение неравенств</h2>
             
             <p>Неравенства находят широкое применение в различных областях:</p>
             
             <ul>
-                <li><strong>В экономике:</strong> оптимизация прибыли, анализ затрат</li>
-                <li><strong>В физике:</strong> определение диапазонов возможных значений величин</li>
-                <li><strong>В геометрии:</strong> неравенство треугольника (сумма любых двух сторон больше третьей)</li>
-                <li><strong>В теории вероятностей:</strong> оценка вероятностей событий</li>
-                <li><strong>В компьютерных алгоритмах:</strong> анализ сложности алгоритмов</li>
+                <li><strong><i class="fas fa-chart-pie"></i> В экономике:</strong> оптимизация прибыли, анализ затрат, определение условий рентабельности</li>
+                <li><strong><i class="fas fa-atom"></i> В физике:</strong> определение диапазонов возможных значений величин, анализ устойчивости систем</li>
+                <li><strong><i class="fas fa-shapes"></i> В геометрии:</strong> неравенство треугольника (сумма любых двух сторон больше третьей), оценка площадей и объемов</li>
+                <li><strong><i class="fas fa-dice"></i> В теории вероятностей:</strong> оценка вероятностей событий, неравенства Маркова, Чебышева</li>
+                <li><strong><i class="fas fa-laptop-code"></i> В компьютерных алгоритмах:</strong> анализ сложности алгоритмов, оценка времени выполнения</li>
+                <li><strong><i class="fas fa-flask"></i> В инженерии:</strong> определение допусков и параметров работы систем</li>
             </ul>
             
             <div class="example">
                 <p><strong>Пример из геометрии:</strong></p>
-                <p>Для треугольника со сторонами a, b, c выполняются неравенства:</p>
-                <p class="math-expr">a + b > c, a + c > b, b + c > a</p>
+                <p>Для треугольника со сторонами a, b, c выполняются неравенства треугольника:</p>
+                <p class="math-expr">\[a + b > c, \quad a + c > b, \quad b + c > a\]</p>
+                <p>Эти неравенства гарантируют, что из отрезков данных длин можно построить треугольник.</p>
+            </div>
+
+            <div class="theorem">
+                <p><strong>Неравенство Коши-Буняковского:</strong></p>
+                <p>Для любых вещественных чисел \( a_1, a_2, \dots, a_n \) и \( b_1, b_2, \dots, b_n \) выполняется:</p>
+                <p class="math-expr">\[\left( \sum_{i=1}^n a_i b_i \right)^2 \leq \left( \sum_{i=1}^n a_i^2 \right) \left( \sum_{i=1}^n b_i^2 \right)\]</p>
+                <p>Это неравенство имеет важные приложения в линейной алгебре, теории вероятностей и анализе данных.</p>
+            </div>
+        </section>
+
+        <section id="quiz">
+            <h2><i class="fas fa-question-circle"></i> Проверь свои знания</h2>
+            
+            <div class="quiz">
+                <div class="quiz-question">1. Какое из решений соответствует неравенству \( 2x - 5 \geq 3 \)?</div>
+                <ul class="quiz-options">
+                    <li class="quiz-option" onclick="checkAnswer(this, true)">\( x \geq 4 \)</li>
+                    <li class="quiz-option" onclick="checkAnswer(this, false)">\( x \leq 4 \)</li>
+                    <li class="quiz-option" onclick="checkAnswer(this, false)">\( x \geq -1 \)</li>
+                    <li class="quiz-option" onclick="checkAnswer(this, false)">\( x \leq -1 \)</li>
+                </ul>
+                <div class="quiz-feedback" id="feedback1">
+                    <p>Правильное решение:</p>
+                    <p>\( 2x - 5 \geq 3 \)</p>
+                    <p>\( 2x \geq 8 \)</p>
+                    <p>\( x \geq 4 \)</p>
+                </div>
+            </div>
+
+            <div class="quiz">
+                <div class="quiz-question">2. Какое множество является решением неравенства \( x^2 - 4 < 0 \)?</div>
+                <ul class="quiz-options">
+                    <li class="quiz-option" onclick="checkAnswer(this, false)">\( (-\infty; -2) \cup (2; +\infty) \)</li>
+                    <li class="quiz-option" onclick="checkAnswer(this, true)">\( (-2; 2) \)</li>
+                    <li class="quiz-option" onclick="checkAnswer(this, false)">\( [-2; 2] \)</li>
+                    <li class="quiz-option" onclick="checkAnswer(this, false)">\( (0; 2) \)</li>
+                </ul>
+                <div class="quiz-feedback" id="feedback2">
+                    <p>Правильное решение:</p>
+                    <p>\( x^2 - 4 < 0 \)</p>
+                    <p>\( x^2 < 4 \)</p>
+                    <p>\( -2 < x < 2 \)</p>
+                </div>
+            </div>
+
+            <div class="quiz">
+                <div class="quiz-question">3. При каких \( x \) выполняется неравенство \( \frac{x-1}{x+3} > 0 \)?</div>
+                <ul class="quiz-options">
+                    <li class="quiz-option" onclick="checkAnswer(this, false)">\( x \in (-3; 1) \)</li>
+                    <li class="quiz-option" onclick="checkAnswer(this, true)">\( x \in (-\infty; -3) \cup (1; +\infty) \)</li>
+                    <li class="quiz-option" onclick="checkAnswer(this, false)">\( x \in (1; +\infty) \)</li>
+                    <li class="quiz-option" onclick="checkAnswer(this, false)">\( x \in (-\infty; -3) \)</li>
+                </ul>
+                <div class="quiz-feedback" id="feedback3">
+                    <p>Правильное решение:</p>
+                    <p>1. Находим критические точки: x = -3 (знаменатель), x = 1 (числитель)</p>
+                    <p>2. Метод интервалов дает решение: \( x \in (-\infty; -3) \cup (1; +\infty) \)</p>
+                </div>
             </div>
         </section>
         
         <div class="footer">
             <p>Проект по математике на тему "Неравенства"</p>
-            <p>© 2025, Выполнил: Охотников богдан 0907-45</p>
-            <a href="../index.html" class="back-button">На главную</a>
+            <p>© 2025, Выполнил: Охотников Богдан 0907-45</p>
+            <a href="../index.html" class="back-button"><i class="fas fa-home"></i> На главную</a>
         </div>
     </div>
+
+    <script>
+        // Функция для проверки ответов в квизе
+        function checkAnswer(element, isCorrect) {
+            const feedback = element.parentElement.nextElementSibling;
+            
+            // Сбрасываем все классы у вариантов ответа
+            element.parentElement.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.classList.remove('correct', 'incorrect');
+            });
+            
+            // Добавляем класс в зависимости от правильности ответа
+            if (isCorrect) {
+                element.classList.add('correct');
+                feedback.style.display = 'block';
+                feedback.style.backgroundColor = 'rgba(0, 184, 148, 0.2)';
+                feedback.style.borderLeft = '3px solid var(--success)';
+            } else {
+                element.classList.add('incorrect');
+                feedback.style.display = 'block';
+                feedback.style.backgroundColor = 'rgba(214, 48, 49, 0.2)';
+                feedback.style.borderLeft = '3px solid var(--danger)';
+            }
+        }
+
+        // Функция для раскрытия/скрытия дополнительного контента
+        function toggleContent(id) {
+            const content = document.getElementById(id);
+            const button = content.previousElementSibling;
+            
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                button.classList.remove('expanded');
+            } else {
+                content.style.maxHeight = content.scrollHeight + 'px';
+                button.classList.add('expanded');
+            }
+        }
+
+        // Прогресс бар чтения
+        window.addEventListener('scroll', function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progressBar").style.width = scrolled + '%';
+            
+            // Показываем/скрываем кнопку "Вверх"
+            const scrollToTop = document.getElementById('scrollToTop');
+            if (winScroll > 300) {
+                scrollToTop.classList.add('visible');
+            } else {
+                scrollToTop.classList.remove('visible');
+            }
+        });
+
+        // Плавная прокрутка к якорям
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Кнопка "Вверх"
+        document.getElementById('scrollToTop').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Инициализация MathJax после загрузки страницы
+        window.addEventListener('load', function() {
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typesetPromise();
+            }
+        });
+    </script>
 </body>
 </html>
