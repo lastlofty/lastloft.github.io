@@ -173,6 +173,7 @@
             background: rgba(162, 155, 254, 0.1);
             border: 1px solid rgba(162, 155, 254, 0.2);
             font-weight: 600;
+            cursor: pointer;
         }
 
         .contact-link:hover {
@@ -185,6 +186,27 @@
 
         .contact-link:active {
             transform: translateY(0);
+        }
+
+        .copy-btn {
+            background: rgba(108, 92, 231, 0.1);
+            border: none;
+            color: var(--secondary);
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-left: 5px;
+            transition: var(--transition-fast);
+        }
+
+        .copy-btn:hover {
+            background: rgba(108, 92, 231, 0.2);
+        }
+
+        .copy-btn.copied {
+            background: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
         }
 
         footer {
@@ -235,50 +257,6 @@
             box-shadow: 0 5px 15px rgba(253, 121, 168, 0.2);
         }
 
-        .copy-btn {
-            background: rgba(108, 92, 231, 0.1);
-            border: none;
-            color: var(--secondary);
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            margin-left: 5px;
-            transition: var(--transition-fast);
-        }
-
-        .copy-btn:hover {
-            background: rgba(108, 92, 231, 0.2);
-        }
-
-        .copy-btn.copied {
-            background: rgba(46, 204, 113, 0.2);
-            color: #2ecc71;
-        }
-
-        .theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 100;
-            transition: var(--transition);
-            color: var(--light);
-        }
-
-        .theme-toggle:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: rotate(30deg);
-        }
-
         .notification {
             position: fixed;
             bottom: 20px;
@@ -297,6 +275,89 @@
 
         .notification.show {
             opacity: 1;
+        }
+
+        /* Модальное окно для fallback email */
+        .email-fallback {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .email-fallback.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .email-fallback-content {
+            background: #2d3436;
+            padding: 25px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .email-fallback.active .email-fallback-content {
+            transform: translateY(0);
+        }
+
+        .email-fallback h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .email-fallback p {
+            margin-bottom: 10px;
+            color: var(--light-gray);
+        }
+
+        .email-fallback-address {
+            background: rgba(0,0,0,0.2);
+            padding: 12px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: monospace;
+            word-break: break-all;
+            color: var(--light);
+        }
+
+        .email-fallback-btn {
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition-fast);
+            margin-right: 10px;
+        }
+
+        .email-fallback-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .email-fallback-btn.secondary {
+            background: #555;
+        }
+
+        .email-fallback-btn.secondary:hover {
+            background: #666;
         }
 
         @media (max-width: 768px) {
@@ -329,59 +390,11 @@
             .subtitle {
                 font-size: 1rem;
             }
-
-            .theme-toggle {
-                width: 40px;
-                height: 40px;
-                top: 15px;
-                right: 15px;
-            }
-        }
-
-        /* Light theme */
-        body.light-theme {
-            background: linear-gradient(135deg, #f5f7fa, #e4e8f0);
-            color: var(--darker);
-        }
-
-        body.light-theme .container {
-            background: rgba(255, 255, 255, 0.85);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            color: var(--darker);
-        }
-
-        body.light-theme .subtitle,
-        body.light-theme .contact-info {
-            color: #555;
-        }
-
-        body.light-theme .contact-card {
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        body.light-theme .contact-card:hover {
-            background: rgba(255, 255, 255, 0.9);
-        }
-
-        body.light-theme footer {
-            color: #666;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-        }
-
-        body.light-theme .social-links a {
-            color: #555;
-            background: rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body>
     <div class="particles" id="particles-js"></div>
-    
-    <button class="theme-toggle" aria-label="Toggle theme">
-        <i class="fas fa-moon"></i>
-    </button>
     
     <div class="container animate__animated animate__fadeIn">
         <h1 class="animate__animated animate__fadeInDown">Обратная связь</h1>
@@ -430,7 +443,7 @@
                 <div class="contact-info">
                     ohotnikovbogdag@gmail.com
                     <button class="copy-btn" data-text="ohotnikovbogdag@gmail.com">Копировать</button>
-                    <a href="mailto:ohotnikovbogdag@gmail.com" class="contact-link">Написать</a>
+                    <span class="contact-link" id="email-write-btn">Написать</span>
                 </div>
             </div>
         </div>
@@ -441,14 +454,85 @@
                 <a href="https://vk.com/lastlofty" target="_blank" rel="noopener noreferrer" aria-label="VK"><i class="fab fa-vk"></i></a>
                 <a href="https://t.me/lastlofty" target="_blank" rel="noopener noreferrer" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
                 <a href="https://github.com/lastlofty" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                <a href="mailto:ohotnikovbogdag@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                <a href="#" id="footer-email-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
             </div>
         </footer>
     </div>
 
+    <!-- Уведомление о копировании -->
     <div class="notification" id="notification">Текст скопирован в буфер обмена!</div>
 
+    <!-- Fallback для email -->
+    <div class="email-fallback" id="email-fallback">
+        <div class="email-fallback-content">
+            <h3>Не удалось открыть почтовый клиент</h3>
+            <p>Скопируйте email и напишите мне вручную:</p>
+            <div class="email-fallback-address">ohotnikovbogdag@gmail.com</div>
+            <p>Тема письма: <strong>Обратная связь</strong></p>
+            <button class="email-fallback-btn" id="copy-email-fallback">Скопировать email</button>
+            <button class="email-fallback-btn secondary" id="close-email-fallback">Закрыть</button>
+        </div>
+    </div>
+
     <script>
+        // Обработка кнопки "Написать" для email
+        document.getElementById('email-write-btn').addEventListener('click', function() {
+            const email = 'ohotnikovbogdag@gmail.com';
+            const subject = 'Обратная связь';
+            const body = 'Здравствуйте,\n\n';
+            
+            // Пытаемся открыть почтовый клиент
+            const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            
+            // Создаем временную ссылку
+            const tempLink = document.createElement('a');
+            tempLink.href = mailtoLink;
+            tempLink.style.display = 'none';
+            document.body.appendChild(tempLink);
+            
+            // Пытаемся открыть
+            try {
+                tempLink.click();
+                
+                // Проверяем, сработало ли (не идеально, но лучшее, что можно сделать)
+                setTimeout(() => {
+                    // Если через 500ms ссылка все еще в DOM, вероятно, не сработало
+                    if(document.body.contains(tempLink)) {
+                        document.body.removeChild(tempLink);
+                        showEmailFallback();
+                    }
+                }, 500);
+            } catch (e) {
+                document.body.removeChild(tempLink);
+                showEmailFallback();
+            }
+        });
+
+        // Обработка email в футере
+        document.getElementById('footer-email-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('email-write-btn').click();
+        });
+
+        // Показ fallback для email
+        function showEmailFallback() {
+            document.getElementById('email-fallback').classList.add('active');
+        }
+
+        // Закрытие fallback
+        document.getElementById('close-email-fallback').addEventListener('click', function() {
+            document.getElementById('email-fallback').classList.remove('active');
+        });
+
+        // Копирование email в fallback
+        document.getElementById('copy-email-fallback').addEventListener('click', function() {
+            navigator.clipboard.writeText('ohotnikovbogdag@gmail.com').then(() => {
+                showNotification('Email скопирован в буфер обмена');
+            }).catch(() => {
+                showNotification('Не удалось скопировать email');
+            });
+        });
+
         // Копирование текста
         document.querySelectorAll('.copy-btn').forEach(btn => {
             btn.addEventListener('click', function() {
@@ -477,47 +561,6 @@
                 notification.classList.remove('show');
             }, 3000);
         }
-
-        // Переключение темы
-        const themeToggle = document.querySelector('.theme-toggle');
-        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-        
-        // Проверка сохраненной темы или системных предпочтений
-        const currentTheme = localStorage.getItem('theme');
-        if (currentTheme === 'light' || (!currentTheme && !prefersDarkScheme.matches)) {
-            document.body.classList.add('light-theme');
-            themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-        } else {
-            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-        }
-        
-        // Обработчик переключения темы
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('light-theme');
-            const isLight = document.body.classList.contains('light-theme');
-            themeToggle.innerHTML = isLight ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
-            localStorage.setItem('theme', isLight ? 'light' : 'dark');
-        });
-
-        // Анимация при загрузке
-        document.addEventListener('DOMContentLoaded', function() {
-            // Инициализация частиц (если подключена библиотека particles.js)
-            if (typeof particlesJS !== 'undefined') {
-                particlesJS.load('particles-js', 'particles.json', function() {
-                    console.log('Particles.js loaded');
-                });
-            }
-        });
-
-        // Плавная прокрутка для якорей
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
     </script>
 </body>
 </html>
