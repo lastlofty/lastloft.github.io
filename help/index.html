@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Помощь и поддержка</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --primary-dark: #5649c7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --accent-dark: #e66797;
+            --dark: #2d3436;
+            --darker: #1e2223;
+            --light: #f5f6fa;
+            --light-gray: #dfe6e9;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --transition-fast: all 0.15s ease-in-out;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+            color: var(--light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 1000px;
+            width: 95%;
+            padding: 30px;
+            background: rgba(45, 52, 54, 0.85);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transform: translateY(0);
+            opacity: 1;
+            transition: var(--transition);
+            margin: 20px;
+            position: relative;
+        }
+
+        .container.hidden {
+            transform: translateY(20px);
+            opacity: 0;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(253, 121, 168, 0.6);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 3px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--light-gray);
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 15px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            background: rgba(108, 92, 231, 0.15);
+            border: 2px solid var(--primary);
+            border-radius: 15px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.1);
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .button i {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--secondary);
+            transition: var(--transition);
+        }
+
+        .button:hover {
+            transform: translateY(-5px);
+            background: rgba(108, 92, 231, 0.25);
+            box-shadow: 0 10px 25px rgba(108, 92, 231, 0.3);
+            border-color: var(--secondary);
+        }
+
+        .button:hover i {
+            transform: scale(1.1);
+            color: var(--accent);
+        }
+
+        .button:active {
+            transform: translateY(0);
+            box-shadow: 0 5px 10px rgba(108, 92, 231, 0.2);
+        }
+
+        .button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: 0.6s;
+        }
+
+        .button:hover::after {
+            transform: translateX(100%);
+        }
+
+        footer {
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition-fast);
+        }
+
+        footer a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            color: var(--light-gray);
+            font-size: 1.2rem;
+            transition: var(--transition-fast);
+        }
+
+        .social-links a:hover {
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .buttons-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .buttons-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .button {
+                padding: 15px;
+            }
+        }
+
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+        .delay-6 { animation-delay: 0.6s; }
+        .delay-7 { animation-delay: 0.7s; }
+        .delay-8 { animation-delay: 0.8s; }
+        .delay-9 { animation-delay: 0.9s; }
+
+        /* Дополнительные стили для формы */
+        .report-form {
+            text-align: left;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--light-gray);
+            font-weight: 500;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: var(--light);
+            font-family: 'Montserrat', sans-serif;
+            transition: var(--transition);
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(108, 92, 231, 0.1);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+        }
+
+        .submit-btn i {
+            margin-right: 8px;
+        }
+
+        .success-message {
+            display: none;
+            background: rgba(46, 213, 115, 0.2);
+            border: 1px solid rgba(46, 213, 115, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            color: #7bed9f;
+        }
+
+        .copy-email {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(108, 92, 231, 0.2);
+            padding: 8px 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .copy-email:hover {
+            background: rgba(108, 92, 231, 0.3);
+        }
+
+        .copy-email i {
+            margin-right: 8px;
+            color: var(--secondary);
+        }
+
+        .email-link {
+            color: var(--accent);
+            font-weight: 600;
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+        .email-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Стили для кнопки "Назад" */
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--light);
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .back-button i {
+            margin-right: 5px;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-3px);
+        }
+
+        .back-button:active {
+            transform: translateX(0);
+        }
+
+        /* Показывать кнопку только на формах */
+        .report-form .back-button,
+        #contact-info .back-button {
+            display: flex;
+        }
+
+        .main-content .back-button {
+            display: none;
+        }
+
+        /* Стили для навигационных кнопок */
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--light);
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .nav-button i {
+            margin-right: 5px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles-js"></div>
+    
+    <div class="container animate-fade-in">
+        <a href="../index.html" class="back-button" id="back-button">
+            <i class="fas fa-arrow-left"></i> На главную
+        </a>
+        
+        <div id="main-content" class="main-content">
+            <h1>Помощь и поддержка</h1>
+            <p class="subtitle">Нашли ошибку в проекте или у вас есть предложение по улучшению? Сообщите нам об этом!</p>
+            
+            <div class="buttons-grid">
+                <div class="button delay-1 animate-fade-in" id="report-bug-btn">
+                    <i class="fas fa-bug"></i>
+                    <span>Сообщить об ошибке</span>
+                </div>
+                
+                <div class="button delay-2 animate-fade-in" id="suggest-feature-btn">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Предложить идею</span>
+                </div>
+                
+                <div class="button delay-3 animate-fade-in" id="contact-btn">
+                    <i class="fas fa-envelope"></i>
+                    <span>Связаться напрямую</span>
+                </div>
+            </div>
+        </div>
+        
+        <div id="report-form" class="report-form">
+            <h3 id="form-title">Сообщить о проблеме</h3>
+            <form id="bug-form">
+                <div class="form-group">
+                    <label for="bug-type">Тип проблемы</label>
+                    <select id="bug-type" required>
+                        <option value="">Выберите тип...</option>
+                        <option value="gameplay">Игровой процесс</option>
+                        <option value="graphics">Графика/Анимации</option>
+                        <option value="sound">Звук/Музыка</option>
+                        <option value="ui">Интерфейс</option>
+                        <option value="performance">Производительность</option>
+                        <option value="other">Другое</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="bug-description">Подробное описание</label>
+                    <textarea id="bug-description" placeholder="Опишите проблему как можно подробнее..." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="bug-steps">Шаги для воспроизведения</label>
+                    <textarea id="bug-steps" placeholder="Опишите, как воспроизвести эту проблему..."></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i> Отправить отчет
+                </button>
+            </form>
+            
+            <div id="success-message" class="success-message">
+                <i class="fas fa-check-circle"></i> Спасибо! Ваш отчет успешно отправлен. Мы рассмотрим его в ближайшее время.
+            </div>
+            
+            <!-- Добавленные кнопки навигации -->
+            <div class="nav-buttons">
+                <button class="nav-button" onclick="showBugReport()">
+                    <i class="fas fa-bug"></i> Ошибка
+                </button>
+                <button class="nav-button" onclick="showFeatureSuggestion()">
+                    <i class="fas fa-lightbulb"></i> Идея
+                </button>
+                <button class="nav-button" onclick="showContactInfo()">
+                    <i class="fas fa-envelope"></i> Контакты
+                </button>
+            </div>
+        </div>
+        
+        <div id="contact-info" class="report-form">
+            <h3>Свяжитесь с нами напрямую</h3>
+            <p>Если вы предпочитаете связаться напрямую, вы можете написать нам на email:</p>
+            
+            <div class="copy-email" onclick="copyEmail()">
+                <i class="fas fa-copy"></i>
+                <span id="email-text">ohotnikovbogdag@gmail.com</span>
+            </div>
+            
+            <p style="margin-top: 20px;">Или нажмите на email, чтобы создать новое письмо:</p>
+            <a href="mailto:ohotnikovbogdag@gmail.com" class="email-link">ohotnikovbogdag@gmail.com</a>
+            
+            <p style="margin-top: 20px;">Мы постараемся ответить вам как можно скорее!</p>
+            
+            <!-- Добавленные кнопки навигации -->
+            <div class="nav-buttons">
+                <button class="nav-button" onclick="showBugReport()">
+                    <i class="fas fa-bug"></i> Ошибка
+                </button>
+                <button class="nav-button" onclick="showFeatureSuggestion()">
+                    <i class="fas fa-lightbulb"></i> Идея
+                </button>
+                <button class="nav-button" onclick="showContactInfo()">
+                    <i class="fas fa-envelope"></i> Контакты
+                </button>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Спасибо, что помогаете сделать наш проект лучше! ❤️</p>
+            <div class="social-links">
+                <a href="https://vk.com/lastlofty" target="_blank"><i class="fab fa-vk"></i></a>
+                <a href="https://t.me/lastlofty" target="_blank"><i class="fab fa-telegram"></i></a>
+                <a href="https://github.com/lastlofty" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Замените этот email на свой реальный
+        const developerEmail = "ohotnikovbogdag@gmail.com";
+        
+        document.getElementById('email-text').textContent = developerEmail;
+        document.querySelector('.email-link').textContent = developerEmail;
+        document.querySelector('.email-link').href = `mailto:${developerEmail}`;
+        
+        // Функции для переключения между разделами
+        function showBugReport() {
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('contact-info').style.display = 'none';
+            document.getElementById('report-form').style.display = 'block';
+            document.getElementById('bug-form').style.display = 'block';
+            document.getElementById('success-message').style.display = 'none';
+            document.getElementById('form-title').textContent = 'Сообщить о проблеме';
+            document.getElementById('bug-type').focus();
+            resetFormToBugReport();
+        }
+        
+        function showFeatureSuggestion() {
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('contact-info').style.display = 'none';
+            document.getElementById('report-form').style.display = 'block';
+            document.getElementById('bug-form').style.display = 'block';
+            document.getElementById('success-message').style.display = 'none';
+            document.getElementById('form-title').textContent = 'Предложить идею';
+            document.getElementById('bug-type').value = 'feature';
+            document.getElementById('bug-description').placeholder = "Опишите вашу идею или предложение как можно подробнее...";
+            document.getElementById('bug-steps').placeholder = "Как вы представляете реализацию этой функции? (необязательно)";
+            document.getElementById('bug-description').focus();
+        }
+        
+        function showContactInfo() {
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('report-form').style.display = 'none';
+            document.getElementById('contact-info').style.display = 'block';
+        }
+        
+        function resetFormToBugReport() {
+            document.getElementById('bug-description').placeholder = "Опишите проблему как можно подробнее...";
+            document.getElementById('bug-steps').placeholder = "Опишите, как воспроизвести эту проблему...";
+        }
+        
+        // Инициализация обработчиков
+        document.getElementById('report-bug-btn').addEventListener('click', showBugReport);
+        document.getElementById('suggest-feature-btn').addEventListener('click', showFeatureSuggestion);
+        document.getElementById('contact-btn').addEventListener('click', showContactInfo);
+        
+        // Обработка формы
+        document.getElementById('bug-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            document.getElementById('bug-form').style.display = 'none';
+            document.getElementById('success-message').style.display = 'block';
+            
+            setTimeout(function() {
+                document.getElementById('bug-form').reset();
+                document.getElementById('bug-form').style.display = 'block';
+                document.getElementById('success-message').style.display = 'none';
+                document.getElementById('report-form').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                resetFormToBugReport();
+            }, 3000);
+        });
+        
+        // Копирование email
+        function copyEmail() {
+            navigator.clipboard.writeText(developerEmail).then(function() {
+                const emailText = document.getElementById('email-text');
+                const originalText = emailText.textContent;
+                emailText.textContent = "Email скопирован!";
+                
+                setTimeout(function() {
+                    emailText.textContent = originalText;
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
